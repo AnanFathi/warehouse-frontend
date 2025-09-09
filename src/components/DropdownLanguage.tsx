@@ -13,8 +13,8 @@ import { ArrowDownIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useTopLoader } from "nextjs-toploader";
 import { COOKIES_KEYS } from "@/lib/staticKeys";
-import { getCookie } from "@/app/actions/cookies/getCookie.action";
-import { setCookie } from "@/app/actions/cookies/setCookie.action";
+import { getCookie } from "@/actions/cookies/getCookie.action";
+import { setCookie } from "@/actions/cookies/setCookie.action";
 
 export function DropdownLanguage() {
   const { t } = useTranslation();

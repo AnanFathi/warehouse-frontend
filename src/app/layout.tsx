@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { getCookie } from "./actions/cookies/getCookie.action";
+import { getCookie } from "../actions/cookies/getCookie.action";
 import { COOKIES_KEYS } from "@/lib/staticKeys";
 import initTranslations from "../../i18n";
 import TranslationsProvider from "@/components/providers/TranslationsProvider";
