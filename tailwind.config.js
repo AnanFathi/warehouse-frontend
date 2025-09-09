@@ -1,9 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: ["class"],
     content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
   	extend: {
+		fontFamily: {
+			quicksand: ["var(--font-quicksand)", "sans-serif"],
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -22,6 +24,7 @@ module.exports = {
   			},
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
+  				light: 'hsl(var(--primary-light))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {

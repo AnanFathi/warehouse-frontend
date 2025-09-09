@@ -22,7 +22,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={i18n.dir()}>
-      <body className={`${quicksand.variable} antialiased`}>
+      <body className={`${quicksand.variable} font-quicksand antialiased bg-white`}>
         <TranslationsProvider
           resources={resources}
           locale={locale}

@@ -1,21 +1,29 @@
+import Form from "@/components/signin/Form";
 import DotPattern from "../../components/signin/DotPattern";
-import { getTranslation } from "../../../i18n";
+import DataReportSVG from "../../../public/svgs/DataReportSVG";
 
 export default async function SignIn() {
-  const { t } = await getTranslation();
-
   return (
-    <div className="flex flex-row w-full h-screen justify-center items-center bg-red-100">
-      <div className="bg-green-200 w-1/2 h-full flex flex-col justify-center items-center">
+    <div className="flex flex-row w-full h-screen justify-center items-center">
+      <div className="w-1/2 h-full flex flex-col justify-center items-center">
         <div>
-          <p className="font-black">{t("LANGUAGE")}</p>
-          <p className="font-black">Sign in</p>
-          <p>Enter your username and password</p>
+          <div className="flex flex-col gap-4">
+            <p className="font-semibold text-4xl">Sign in</p>
+            <p className="text-lg font-light">Enter your username and password</p>
+          </div>
+
+          <Form />
         </div>
       </div>
 
-      <div className="w-1/2 h-full bg-blue-200">
-        <DotPattern bigSize={16} smallSize={8} spacing={40} color="#0f172a66" />
+      <div className="w-[3px] h-[95%] bg-gradient-to-b from-transparent via-primary to-transparent" />
+
+      <div className="relative w-1/2 h-full">
+        <DotPattern bigSize={24} smallSize={14} spacing={60} color="#9E1E2207" />
+
+        <div className="absolute top-0 start-0 w-full h-full p-28">
+          <DataReportSVG className="w-full h-full" />
+        </div>
       </div>
     </div>
   );
