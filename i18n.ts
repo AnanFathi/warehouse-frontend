@@ -23,7 +23,7 @@ export const i18nConfig = {
   defaultLocale: LOCALES.arabic,
 };
 
-export default async function initTranslations(
+export async function initTranslations(
   locale: string,
   namespaces: string[],
   i18nInstance?: I18nInstance,
@@ -64,7 +64,8 @@ export default async function initTranslations(
   };
 }
 
-export async function getTranslation() {
+export default async function getTranslation() {
   const locale = await getCookie(COOKIES_KEYS.locale);
-  return await initTranslations(locale, ["locale"]);
+  const translation = await initTranslations(locale, ["locale"]);
+  return { locale, ...translation };
 }

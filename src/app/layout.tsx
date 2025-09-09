@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { getCookie } from "../actions/cookies/getCookie.action";
-import { COOKIES_KEYS } from "@/lib/staticKeys";
-import initTranslations from "../../i18n";
+import getTranslation from "../../i18n";
 import TranslationsProvider from "@/components/providers/TranslationsProvider";
 
 const quicksand = localFont({
@@ -20,8 +18,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const locale = await getCookie(COOKIES_KEYS.locale);
-  const { resources, i18n } = await initTranslations(locale, ["locale"]);
+  const { resources, i18n, locale } = await getTranslation();
 
   return (
     <html lang={locale} dir={i18n.dir()}>
