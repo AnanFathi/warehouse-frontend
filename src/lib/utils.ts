@@ -1,12 +1,13 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../tailwind.config";
+import React from "react";
 
 const fullConfig = resolveConfig(tailwindConfig);
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const getTailwindColor = (input: string) => {
@@ -51,3 +52,48 @@ export const getTailwindColor = (input: string) => {
 
   return null;
 };
+
+export function styleSplitText(
+  text: string,
+  wrappers?: Array<string | React.ReactElement>
+): React.ReactNode {
+  if (!text) return null;
+
+  const regex = /<(\d+)>([\s\S]*?)<\/\1>/g;
+  const nodes: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+
+  while ((match = regex.exec(text)) !== null) {
+    const matchStart = match.index;
+    const fullMatch = match[0];
+    const idx = Number(match[1]);
+    const inner = match[2];
+
+    if (matchStart > lastIndex) {
+      nodes.push(text.slice(lastIndex, matchStart));
+    }
+
+    const wrapper = wrappers?.[idx];
+
+    if (wrapper && React.isValidElement(wrapper)) {
+      nodes.push(React.cloneElement(wrapper, { key: `ht-${key++}` }, inner));
+    } else {
+      const className = typeof wrapper === "string" ? wrapper : undefined;
+      nodes.push(
+        React.createElement("span", { key: `ht-${key++}`, className }, inner)
+      );
+    }
+
+    lastIndex = matchStart + fullMatch.length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(text.slice(lastIndex));
+  }
+
+  return nodes.length === 0
+    ? text
+    : React.createElement(React.Fragment, null, ...nodes);
+}

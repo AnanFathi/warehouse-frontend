@@ -1,5 +1,6 @@
 {
   "LANGUAGE": "Language",
   "ARABIC": "عربي",
-  "ENGLISH": "English"
+  "ENGLISH": "English",
+  "SUCCESSFULLYLOGGED": "You are <0>Successfully</0> logged into the Admin <1>Dashboard</1>."
 }

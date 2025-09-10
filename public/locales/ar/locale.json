@@ -1,5 +1,6 @@
 {
   "LANGUAGE": "لغة",
   "ARABIC": "عربي",
-  "ENGLISH": "English"
+  "ENGLISH": "English",
+  "SUCCESSFULLYLOGGED": "لقد تم تسجيل دخولك <0>بنجاح</0> إلى <1>لوحة التحكم</1>."
 }
