@@ -5,23 +5,23 @@ import DataReportSVG from "../../../public/svgs/DataReportSVG";
 export default async function SignIn() {
   return (
     <div className="flex flex-row w-full h-screen justify-center items-center">
-      <div className="w-1/2 h-full flex flex-col justify-center items-center">
-        <div>
+      <div className="w-full lg:w-1/2 px-4 lg:px-8 h-full flex flex-col justify-center items-center transition-all">
+        <div className="w-full max-w-[650px] flex flex-col gap-12">
           <div className="flex flex-col gap-4">
-            <p className="font-semibold text-4xl">Sign in</p>
-            <p className="text-lg font-light">Enter your username and password</p>
+            <p className="font-bold text-3xl lg:text-4xl transition-all">Sign in</p>
+            <p className="font-light text-xl lg:text-2xl text-neutral-600 transition-all">Enter your username and password</p>
           </div>
 
           <Form />
         </div>
       </div>
 
-      <div className="w-[3px] h-[95%] bg-gradient-to-b from-transparent via-primary to-transparent" />
+      <div className="max-lg:hidden w-[3px] h-[95%] bg-gradient-to-b from-transparent via-primary to-transparent" />
 
-      <div className="relative w-1/2 h-full">
+      <div className="max-lg:hidden relative w-1/2 h-full">
         <DotPattern bigSize={24} smallSize={14} spacing={60} color="#9E1E2207" />
 
-        <div className="absolute top-0 start-0 w-full h-full p-28">
+        <div className="absolute top-0 start-0 w-full h-full p-10 xl:p-20 2xl:p-28 transition-all">
           <DataReportSVG className="w-full h-full" />
         </div>
       </div>
