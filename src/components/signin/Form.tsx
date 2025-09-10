@@ -5,8 +5,10 @@ import { Button } from "../ui/button";
 import { getTailwindColor } from "@/lib/utils";
 import { EnvelopeSimpleIcon, KeyIcon } from "@phosphor-icons/react";
 import TextInput from "@/components/TextInput";
+import { useTranslation } from "react-i18next";
 
 const Form = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,8 +17,8 @@ const Form = () => {
   return (
     <div className="flex flex-col gap-8">
       <TextInput
-        label="Username"
-        placeholder="Enter username"
+        label={t("USERNAME")}
+        placeholder={t("ENTER_USERNAME")}
         value={email}
         setValue={setEmail}
         icon={
@@ -25,8 +27,8 @@ const Form = () => {
       />
 
       <TextInput
-        label="Password"
-        placeholder="Enter password"
+        label={t("PASSWORD")}
+        placeholder={t("ENTER_PASSWORD")}
         value={password}
         setValue={setPassword}
         icon={<KeyIcon size={25} color={getTailwindColor("primary")} />}
@@ -40,7 +42,7 @@ const Form = () => {
         }`}
         variant={valid ? "default" : "secondary"}
       >
-        Sign in
+        {t("SIGNIN")}
       </Button>
     </div>
   );

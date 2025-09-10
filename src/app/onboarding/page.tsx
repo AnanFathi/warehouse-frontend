@@ -1,11 +1,11 @@
-import { styleSplitText } from "@/lib/utils";
+import Link from "next/link";
 import getTranslation from "../../../i18n";
 import DesignStatsSVG from "../../../public/svgs/DesignStatsSVG";
 import DotPattern from "../../components/signin/DotPattern";
 import { DropdownLanguage } from "@/components/DropdownLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
-import Link from "next/link";
+import { styleSplitText } from "@/lib/utils";
 
 export default async function Onboarding() {
   const { t } = await getTranslation();
@@ -21,14 +21,20 @@ export default async function Onboarding() {
         />
       </div>
 
-      <div className="w-[700px] flex flex-col items-center text-center gap-10 z-10">
-        <DesignStatsSVG className="w-[600px]" />
-        <p className="text-3xl text-neutral-800">{styleSplitText(t("SUCCESSFULLYLOGGED"), ["text-primary font-semibold", "text-primary font-semibold"])}</p>
-        
-        <Button asChild className="w-72 py-7 text-lg font-semibold rounded-lg">
+      <div className="w-[700px] flex flex-col items-center text-center gap-10 z-10 px-4 lg:px-0">
+        <DesignStatsSVG className="w-full sm:w-[600px]" />
+
+        <p className="text-2xl lg:text-3xl text-neutral-800 transition-all">
+          {styleSplitText(t("SUCCESSFULLY_LOGGED"), [
+            "text-primary font-semibold",
+            "text-primary font-semibold",
+          ])}
+        </p>
+
+        <Button asChild className="w-full sm:w-72 py-7 text-lg font-semibold rounded-lg transition-all">
           <Link href="/dashboard" className="flex gap-4">
-            <p>Go to dashboard</p>
-            <ArrowRightIcon weight="bold" />
+            <p>{t("GO_TO_DASHBOARD")}</p>
+            <ArrowRightIcon weight="bold" className="rtl:rotate-180" />
           </Link>
         </Button>
       </div>

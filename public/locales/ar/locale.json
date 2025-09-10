@@ -1,6 +1,12 @@
 {
-  "LANGUAGE": "لغة",
   "ARABIC": "عربي",
   "ENGLISH": "English",
-  "SUCCESSFULLYLOGGED": "لقد تم تسجيل دخولك <0>بنجاح</0> إلى <1>لوحة التحكم</1>."
+  "SIGNIN": "تسجيل الدخول",
+  "ENTER_EMAIL_AND_PASSWORD": "أدخل اسم المستخدم وكلمة المرور",
+  "USERNAME": "اسم المستخدم",
+  "PASSWORD": "كلمة المرور",
+  "ENTER_USERNAME": "أدخل اسم المستخدم",
+  "ENTER_PASSWORD": "أدخل كلمة المرور",
+  "GO_TO_DASHBOARD": "اذهب إلى لوحة التحكم",
+  "SUCCESSFULLY_LOGGED": "لقد تم تسجيل دخولك <0>بنجاح</0> إلى <1>لوحة التحكم</1>."
 }

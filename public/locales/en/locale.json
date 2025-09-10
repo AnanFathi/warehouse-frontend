@@ -1,6 +1,12 @@
 {
-  "LANGUAGE": "Language",
   "ARABIC": "عربي",
   "ENGLISH": "English",
-  "SUCCESSFULLYLOGGED": "You are <0>Successfully</0> logged into the Admin <1>Dashboard</1>."
+  "SIGNIN": "Sign in",
+  "ENTER_EMAIL_AND_PASSWORD": "Enter your username and password",
+  "USERNAME": "Username",
+  "PASSWORD": "Password",
+  "ENTER_USERNAME": "Enter username",
+  "ENTER_PASSWORD": "Enter password",
+  "GO_TO_DASHBOARD": "Go to dashboard",
+  "SUCCESSFULLY_LOGGED": "You are <0>Successfully</0> logged into the Admin <1>Dashboard</1>."
 }
