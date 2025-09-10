@@ -1,72 +1,88 @@
-import { Fragment } from "react"
+"use client";
+
+import { Fragment } from "react";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
-  SidebarHeader
+  SidebarHeader,
 } from "@/components/ui/sidebar";
 import {
   ClipboardTextIcon,
-  CopyIcon,
   FolderUserIcon,
   SquaresFourIcon,
   UserIcon,
   UsersThreeIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 const items = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/dashboard",
     icon: SquaresFourIcon,
   },
   {
     title: "Forms",
-    url: "#",
+    url: "/forms",
     icon: ClipboardTextIcon,
   },
   {
     title: "Assessment Group",
-    url: "#",
+    url: "/assessment-group",
     icon: FolderUserIcon,
   },
   {
     title: "Admins",
-    url: "#",
+    url: "/admins",
     icon: UsersThreeIcon,
   },
   {
     title: "Candidates",
-    url: "#",
+    url: "/candidates",
     icon: UserIcon,
   },
 ];
 
 export function AdminSidebar() {
+  const { i18n } = useTranslation();
+  const pathname = usePathname().split("/")[1];
+
   return (
-    <Sidebar collapsible="icon" className="[--sidebar-width:18rem]s [--sidebar-width-icon:6rem]s">
-      <SidebarHeader>
-        <Image alt="" src="/images/logo.png" width={40} height={40}/>
+    <Sidebar
+      side={i18n.dir() === "ltr" ? "left" : "right"}
+      collapsible="icon"
+    >
+      <SidebarHeader className="items-center py-6">
+        <Image alt="" src="/images/logo.png" width={50} height={50} />
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-2 group-data-[collapsible=icon]:gap-2">
               {items.map((item, index) => (
                 <Fragment key={item.title}>
                   <SidebarMenuItem>
-                    <SidebarMenuButton asChild className="py-6 bg-red-200">
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={item.title}
+                      className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
+                        "/" + pathname === item.url && "bg-secondary/30"
+                      }`}
+                    >
                       <a href={item.url}>
-                        <item.icon className="!w-8 !h-8 fill-primary"/>
-                        <span className="text-xl text-primary">{item.title}</span>
+                        <item.icon className="!w-8 !h-8 fill-white" />
+                        <span className="text-xl text-white">
+                          {item.title}
+                        </span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
