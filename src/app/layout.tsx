@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import getTranslation from "../../i18n";
 import TranslationsProvider from "@/components/providers/TranslationsProvider";
+import NextTopLoader from "nextjs-toploader";
+import { getTailwindColor } from "@/lib/utils";
 
 const quicksand = localFont({
   src: "../../public/fonts/Quicksand-VariableFont_wght.ttf",
@@ -22,12 +24,15 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={i18n.dir()}>
-      <body className={`${quicksand.variable} font-quicksand antialiased bg-white`}>
+      <body
+        className={`${quicksand.variable} font-quicksand antialiased bg-white`}
+      >
         <TranslationsProvider
           resources={resources}
           locale={locale}
           namespaces={["locale"]}
         >
+          <NextTopLoader showSpinner color={getTailwindColor("primary")} />
           {children}
         </TranslationsProvider>
       </body>

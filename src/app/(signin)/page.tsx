@@ -1,10 +1,11 @@
 import Form from "@/components/signin/Form";
 import DotPattern from "../../components/signin/DotPattern";
 import DataReportSVG from "../../../public/svgs/DataReportSVG";
+import { DropdownLanguage } from "@/components/DropdownLanguage";
 
 export default async function SignIn() {
   return (
-    <div className="flex flex-row w-full h-screen justify-center items-center">
+    <div className="relative flex flex-row w-full h-screen justify-center items-center">
       <div className="w-full lg:w-1/2 px-4 lg:px-8 h-full flex flex-col justify-center items-center transition-all">
         <div className="w-full max-w-[650px] flex flex-col gap-12">
           <div className="flex flex-col gap-4">
@@ -25,6 +26,8 @@ export default async function SignIn() {
           <DataReportSVG className="w-full h-full" />
         </div>
       </div>
+
+      <div className="absolute top-4 end-4"><DropdownLanguage /></div>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowDownIcon } from "@phosphor-icons/react";
+import { CaretDownIcon, GlobeSimpleIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useTopLoader } from "nextjs-toploader";
 import { COOKIES_KEYS } from "@/lib/staticKeys";
@@ -44,15 +44,13 @@ export function DropdownLanguage() {
   return (
     <DropdownMenu onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="text-neutral-4 font-medium bg-white focus:outline-none focus-visible:outline-none"
-        >
+        <Button className="group text-primary hover:text-white fill-primary group-hover:fill-white font-medium bg-white">
+          <GlobeSimpleIcon />
+
           {t(languages[currentLocale])}
-          <ArrowDownIcon
-            className={`fill-primary transition-transform ${
-              open ? "rotate-180" : ""
-            }`}
+
+          <CaretDownIcon
+            className={`transition-transform ${open ? "rotate-180" : ""}`}
           />
         </Button>
       </DropdownMenuTrigger>
@@ -64,16 +62,16 @@ export function DropdownLanguage() {
         >
           <DropdownMenuRadioItem
             value="en"
-            className="text-neutral-2 font-medium [&>span]:hidden p-2 flex justify-center
-                       data-[state=checked]:bg-primary-1 data-[state=checked]:text-primary-4"
+            className="text-primary hover:!text-primary font-medium [&>span]:hidden p-2 flex justify-center
+                       data-[state=checked]:bg-secondary data-[state=checked]:text-primary"
           >
             {t("ENGLISH")}
           </DropdownMenuRadioItem>
-          
+
           <DropdownMenuRadioItem
             value="ar"
-            className="text-neutral-2 font-medium [&>span]:hidden p-2 flex justify-center
-                       data-[state=checked]:bg-primary-1 data-[state=checked]:text-primary-4"
+            className="text-primary hover:!text-primary font-medium [&>span]:hidden p-2 flex justify-center
+                       data-[state=checked]:bg-secondary data-[state=checked]:text-primary"
           >
             {t("ARABIC")}
           </DropdownMenuRadioItem>

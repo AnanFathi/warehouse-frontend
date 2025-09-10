@@ -3,7 +3,7 @@
 import { I18nextProvider } from "react-i18next";
 import { useState, useEffect } from "react";
 import { createInstance, type i18n as I18nInstance } from "i18next";
-import initTranslations from "../../../i18n";
+import { initTranslations } from "../../../i18n";
 
 type Props = {
   children: React.ReactNode;
