@@ -31,27 +31,27 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const items = [
   {
-    title: "Dashboard",
+    title: "DASHBOARD",
     url: "/dashboard",
     icon: SquaresFourIcon,
   },
   {
-    title: "Forms",
+    title: "FORMS",
     url: "/forms",
     icon: ClipboardTextIcon,
   },
   {
-    title: "Assessment Group",
+    title: "ASSESSMENT_GROUP",
     url: "/assessment-group",
     icon: FolderUserIcon,
   },
   {
-    title: "Admins",
+    title: "ADMINS",
     url: "/admins",
     icon: UsersThreeIcon,
   },
   {
-    title: "Candidates",
+    title: "CANDIDATES",
     url: "/candidates",
     icon: UserIcon,
   },
@@ -77,7 +77,7 @@ function SideBarButton({ dir }: { dir: "ltr" | "rtl" }) {
 }
 
 export function AdminSidebar() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isMobile = useIsMobile();
   const pathname = "/" + usePathname().split("/")[1];
 
@@ -111,7 +111,7 @@ export function AdminSidebar() {
                     <SidebarMenuItem>
                       <SidebarMenuButton
                         asChild
-                        tooltip={item.title}
+                        tooltip={t(item.title)}
                         className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
                           pathname === item.url && "bg-secondary/30"
                         }`}
@@ -119,7 +119,7 @@ export function AdminSidebar() {
                         <a href={item.url}>
                           <item.icon className="!w-8 !h-8 fill-white" />
                           <span className="text-xl text-white">
-                            {item.title}
+                            {t(item.title)}
                           </span>
                         </a>
                       </SidebarMenuButton>
@@ -140,14 +140,14 @@ export function AdminSidebar() {
         <SidebarFooter>
           <SidebarMenuButton
             asChild
-            tooltip={"Settings"}
+            tooltip={t("SETTINGS")}
             className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
               pathname === "/settings" && "bg-secondary/30"
             }`}
           >
             <a href="/settings">
               <GearIcon className="!w-8 !h-8 fill-white" />
-              <span className="text-xl text-white">Settings</span>
+              <span className="text-xl text-white">{t("SETTINGS")}</span>
             </a>
           </SidebarMenuButton>
         </SidebarFooter>

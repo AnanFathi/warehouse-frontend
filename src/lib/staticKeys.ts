@@ -3,3 +3,6 @@ export const COOKIES_KEYS = {
   locale: "NEXT_LOCALE",
 };
 
+export const displayAdminNames: Record<string, string> = {
+  dashboard: "DASHBOARD",
+};

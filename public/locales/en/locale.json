@@ -8,5 +8,13 @@
   "ENTER_USERNAME": "Enter username",
   "ENTER_PASSWORD": "Enter password",
   "GO_TO_DASHBOARD": "Go to dashboard",
-  "SUCCESSFULLY_LOGGED": "You are <0>Successfully</0> logged into the Admin <1>Dashboard</1>."
+  "SUCCESSFULLY_LOGGED": "You are <0>Successfully</0> logged into the Admin <1>Dashboard</1>.",
+  "DASHBOARD": "Dashboard",
+  "FORMS": "Forms",
+  "ASSESSMENT_GROUP": "Assessment Group",
+  "ADMINS": "Admins",
+  "CANDIDATES": "Candidates",
+  "SETTINGS": "Settings",
+  "NO_DATA_YET": "No data yet!",
+  "SUPER_ADMIN": "Super admin"
 }
