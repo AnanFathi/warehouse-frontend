@@ -13,18 +13,21 @@ import {
   SidebarSeparator,
   SidebarHeader,
   useSidebar,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import {
   CaretDoubleLeftIcon,
   CaretDoubleRightIcon,
   ClipboardTextIcon,
   FolderUserIcon,
+  GearIcon,
   SquaresFourIcon,
   UserIcon,
   UsersThreeIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const items = [
   {
@@ -55,75 +58,100 @@ const items = [
 ];
 
 function SideBarButton({ dir }: { dir: "ltr" | "rtl" }) {
-  const { toggleSidebar, state } = useSidebar();
+  const { toggleSidebar, state, isMobile, openMobile } = useSidebar();
 
   const Icon = dir === "ltr" ? CaretDoubleRightIcon : CaretDoubleLeftIcon;
+  const rotation =
+    (!isMobile && state === "expanded") || (isMobile && openMobile)
+      ? "rotate-180"
+      : "";
 
   return (
     <button
       onClick={toggleSidebar}
       className="bg-white p-2 w-fit h-fit rounded-full shadow-md shadow-black/50"
     >
-      <Icon
-        className={`fill-primary  transition-all ${
-          state === "expanded" && "rotate-180"
-        }`}
-        size={20}
-      />
+      <Icon className={`fill-primary  transition-all ${rotation}`} size={20} />
     </button>
   );
 }
 
 export function AdminSidebar() {
   const { i18n } = useTranslation();
+  const isMobile = useIsMobile();
   const pathname = "/" + usePathname().split("/")[1];
 
   return (
-    <Sidebar
-      className="relative"
-      side={i18n.dir() === "ltr" ? "left" : "right"}
-      collapsible="icon"
-    >
-      <div className="absolute top-24 -end-5 z-10">
-        <SideBarButton dir={i18n.dir()} />
-      </div>
+    <div className="relative bg-transparent">
+      {isMobile && (
+        <div className="absolute top-24 -end-10">
+          <SideBarButton dir={i18n.dir()} />
+        </div>
+      )}
 
-      <SidebarHeader className="items-center py-6">
-        <Image alt="" src="/images/logo.png" width={50} height={50} />
-      </SidebarHeader>
+      <Sidebar
+        className="relative"
+        side={i18n.dir() === "ltr" ? "left" : "right"}
+        collapsible="icon"
+      >
+        <div className="absolute top-24 -end-5 z-10">
+          <SideBarButton dir={i18n.dir()} />
+        </div>
 
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu className="gap-2 group-data-[collapsible=icon]:gap-2">
-              {items.map((item, index) => (
-                <Fragment key={item.title}>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton
-                      asChild
-                      tooltip={item.title}
-                      className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
-                        pathname === item.url && "bg-secondary/30"
-                      }`}
-                    >
-                      <a href={item.url}>
-                        <item.icon className="!w-8 !h-8 fill-white" />
-                        <span className="text-xl text-white">{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+        <SidebarHeader className="items-center py-6">
+          <Image alt="" src="/images/logo.png" width={50} height={50} />
+        </SidebarHeader>
 
-                  {index === 0 && (
-                    <div className="group-data-[collapsible=icon]:px-5">
-                      <SidebarSeparator />
-                    </div>
-                  )}
-                </Fragment>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu className="gap-2 group-data-[collapsible=icon]:gap-2">
+                {items.map((item, index) => (
+                  <Fragment key={item.title}>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={item.title}
+                        className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
+                          pathname === item.url && "bg-secondary/30"
+                        }`}
+                      >
+                        <a href={item.url}>
+                          <item.icon className="!w-8 !h-8 fill-white" />
+                          <span className="text-xl text-white">
+                            {item.title}
+                          </span>
+                        </a>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                    {index === 0 && (
+                      <div className="group-data-[collapsible=icon]:px-5">
+                        <SidebarSeparator />
+                      </div>
+                    )}
+                  </Fragment>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        <SidebarFooter>
+          <SidebarMenuButton
+            asChild
+            tooltip={"Settings"}
+            className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
+              pathname === "/settings" && "bg-secondary/30"
+            }`}
+          >
+            <a href="/settings">
+              <GearIcon className="!w-8 !h-8 fill-white" />
+              <span className="text-xl text-white">Settings</span>
+            </a>
+          </SidebarMenuButton>
+        </SidebarFooter>
+      </Sidebar>
+    </div>
   );
 }
