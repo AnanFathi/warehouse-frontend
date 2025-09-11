@@ -1,7 +1,8 @@
 "use client";
 
-import { Fragment } from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Fragment } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -25,7 +26,6 @@ import {
   UserIcon,
   UsersThreeIcon,
 } from "@phosphor-icons/react/dist/ssr";
-import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/hooks/use-mobile";
 

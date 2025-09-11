@@ -24,7 +24,7 @@ export default async function SignIn() {
         </div>
       </div>
 
-      <div className="max-lg:hidden w-[3px] h-[95%] bg-gradient-to-b from-transparent via-primary to-transparent" />
+      <div className="max-lg:hidden w-[2px] h-[95%] bg-gradient-to-b from-transparent via-primary to-transparent" />
 
       <div className="max-lg:hidden relative w-1/2 h-full">
         <DotPattern
