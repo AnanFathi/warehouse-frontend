@@ -14,10 +14,12 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const title = displayAdminNames[route];
 
   return (
-    <div className="w-full h-full px-20 py-8 flex flex-col gap-6">
+    <div className="w-full px-20 py-8 flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-row justify-between items-center">
-        <p className="bg-white w-full text-3xl font-semibold">{t(title) || route}</p>
+        <p className="bg-white w-full text-3xl font-semibold">
+          {t(title) || route}
+        </p>
 
         <div className="flex flex-row gap-4">
           <Badge
@@ -41,9 +43,7 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
       <Separator />
 
       {/* Body */}
-      <div className="bg-white w-full p-4 flex-1 border rounded-2xl flex">
-        {children}
-      </div>
+      <div className="bg-white w-full h-[600px] p-4 border rounded-2xl">{children}</div>
     </div>
   );
 };

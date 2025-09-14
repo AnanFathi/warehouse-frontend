@@ -5,4 +5,5 @@ export const COOKIES_KEYS = {
 
 export const displayAdminNames: Record<string, string> = {
   dashboard: "DASHBOARD",
+  admins: "ADMINS",
 };

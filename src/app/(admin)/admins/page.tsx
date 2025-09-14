@@ -1,9 +1,10 @@
-import NoDataFound from "@/components/NoDataFound";
+import Table from "@/components/DataTable";
 
 export default async function Dashboard() {
+  
   return (
     <div className="w-full h-full">
-      <NoDataFound />
+      <Table />
     </div>
   );
 }
