@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -11,157 +13,78 @@ import {
   PencilSimpleLineIcon,
   TrashIcon,
 } from "@phosphor-icons/react/dist/ssr";
+import { useState } from "react";
 
-const invoices = [
+export const testUsers = [
   {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
+    id: "0",
+    username: "oliver.james",
+    password: "w7$Gk9rVb!2q",
+    role: "ADMIN",
   },
   {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
+    id: "1",
+    username: "emma.wilson",
+    password: "Zr!4pLx8Mv#1",
+    role: "SUPER_ADMIN",
   },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV008",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV009",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV0010",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV011",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV012",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV013",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV014",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV015",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV016",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV017",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV018",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV019",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV020",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV021",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
+  { id: "2", username: "liam.miller", password: "Tq3@Hd9nYv6$", role: "ADMIN" },
+  { id: "3", username: "ava.brown", password: "P#8cR2sWm6!z", role: "ADMIN" },
 ];
 
 const DataTable = () => {
+  const [selectedAll, setSelectedAll] = useState<"indeterminate" | boolean>(
+    false
+  );
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleSelectAllRows = (checked: boolean) => {
+    if (checked) {
+      const allIds = testUsers.map((user) => user.id);
+      setSelected(allIds);
+      setSelectedAll(true);
+    } else {
+      setSelected([]);
+      setSelectedAll(false);
+    }
+  };
+
+  const handleSelectRow = (id: string, checked: boolean) => {
+    setSelected((currentSelected) => {
+      const newSelected = checked
+        ? [...currentSelected, id]
+        : currentSelected.filter((item) => item !== id);
+
+      if (newSelected.length === testUsers.length) {
+        setSelectedAll(true);
+      } else if (newSelected.length === 0) {
+        setSelectedAll(false);
+      } else {
+        setSelectedAll("indeterminate");
+      }
+
+      return newSelected;
+    });
+  };
+
   return (
     <div className="h-full flex flex-col border border-neutral-200 rounded-xl overflow-hidden">
       <Table>
         <TableHeader className="bg-neutral-100 h-12 sticky top-0 z-10">
           <TableRow>
             <TableHead className="w-10 h-10 text-center">
-              <Checkbox />
+              <Checkbox
+                checked={selectedAll}
+                onCheckedChange={handleSelectAllRows}
+              />
             </TableHead>
             <TableHead className="w-24 text-black text-nowrap">
-              Invoice
+              Username
             </TableHead>
             <TableHead className="w-24 text-black text-nowrap">
-              Status
+              Password
             </TableHead>
-            <TableHead className="w-24 text-black text-nowrap">
-              Method
-            </TableHead>
-            <TableHead className="w-24 text-black text-nowrap">
-              Amount
-            </TableHead>
+            <TableHead className="w-24 text-black text-nowrap">Role</TableHead>
             <TableHead className="w-20 text-black text-nowrap">
               Actions
             </TableHead>
@@ -169,27 +92,26 @@ const DataTable = () => {
         </TableHeader>
 
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
+          {testUsers.map((user) => (
+            <TableRow key={user.id}>
               <TableCell className="w-10 h-10 text-center">
-                <Checkbox />
+                <Checkbox
+                  id={user.id}
+                  checked={selected.includes(user.id)}
+                  onCheckedChange={(checked) =>
+                    handleSelectRow(user.id, checked as boolean)
+                  }
+                />
               </TableCell>
 
               <TableCell className="text-nowrap font-medium">
-                {invoice.invoice}
+                {user.username}
               </TableCell>
-              <TableCell className="text-nowrap">
-                {invoice.paymentStatus}
-              </TableCell>
-              <TableCell className="text-nowrap">
-                {invoice.paymentMethod}
-              </TableCell>
-              <TableCell className="text-nowrap">
-                {invoice.totalAmount}
-              </TableCell>
+              <TableCell className="text-nowrap">{user.password}</TableCell>
+              <TableCell className="text-nowrap">{user.role}</TableCell>
 
               <TableCell>
-                <div className="flex flow-row gap-4">
+                <div className="flex gap-4">
                   <button>
                     <PencilSimpleLineIcon
                       className="fill-neutral-600"
@@ -206,6 +128,8 @@ const DataTable = () => {
           ))}
         </TableBody>
       </Table>
+
+      <div className="mt-4 text-sm">Selected {selected.length}</div>
     </div>
   );
 };
