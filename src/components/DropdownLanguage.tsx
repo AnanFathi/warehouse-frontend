@@ -55,7 +55,7 @@ export function DropdownLanguage() {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="min-w-0 w-fit">
+      <DropdownMenuContent className="min-w-0 w-fit" onCloseAutoFocus={(e => e.preventDefault())}>
         <DropdownMenuRadioGroup
           value={currentLocale}
           onValueChange={handleChange}

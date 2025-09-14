@@ -10,13 +10,14 @@ import { displayAdminNames } from "@/lib/staticKeys";
 const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const { t } = useTranslation();
   const pathname = usePathname();
-  const title = displayAdminNames[pathname.split("/")[1]];
+  const route = pathname.split("/")[1];
+  const title = displayAdminNames[route];
 
   return (
     <div className="w-full h-full px-20 py-8 flex flex-col gap-6">
       {/* Header */}
       <div className="flex flex-row justify-between items-center">
-        <p className="bg-white w-full text-3xl font-semibold">{t(title)}</p>
+        <p className="bg-white w-full text-3xl font-semibold">{t(title) || route}</p>
 
         <div className="flex flex-row gap-4">
           <Badge
