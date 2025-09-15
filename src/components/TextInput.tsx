@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { getTailwindColor } from "@/lib/utils";
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import { HTMLInputTypeAttribute, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   value: string;
@@ -14,6 +15,7 @@ type Props = {
   placeholder?: string;
   icon?: React.ReactNode;
   isPassword?: boolean;
+  className?: string;
 };
 
 const TextInput = ({
@@ -24,6 +26,7 @@ const TextInput = ({
   placeholder,
   icon,
   isPassword,
+  className,
 }: Props) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
@@ -36,7 +39,11 @@ const TextInput = ({
       )}
 
       <div className="relative">
-        {icon && <div className="absolute start-4 top-4">{icon}</div>}
+        {icon && (
+          <div className="absolute start-4 top-1/2 -translate-y-1/2">
+            {icon}
+          </div>
+        )}
 
         <Input
           value={value}
@@ -46,15 +53,18 @@ const TextInput = ({
           }}
           type={isPassword && !isPasswordShown ? "password" : type}
           placeholder={placeholder}
-          className={`h-14 border-2 focus:border-primary rounded-lg ${
-            icon ? "ps-12" : ""
-          } ${isPassword ? "pe-12" : ""}`}
+          className={twMerge(
+            `h-14 border-2 focus:border-primary rounded-lg ${
+              icon ? "ps-12" : ""
+            } ${isPassword ? "pe-12" : ""}`,
+            className
+          )}
           style={{ fontSize: 20 }}
         />
 
         {isPassword && (
           <button
-            className="absolute end-4 top-4"
+            className="absolute end-4 top-1/2 -translate-y-1/2"
             onClick={() => setIsPasswordShown(!isPasswordShown)}
           >
             {isPasswordShown ? (
