@@ -10,10 +10,13 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
+  CaretDownIcon,
   PencilSimpleLineIcon,
   TrashIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
+import { PaginatedResponse, SortType } from "@/model/shared.models";
+import Pagination from "./Pagination";
 
 export type Column = {
   header: string;
@@ -26,9 +29,30 @@ type Props = {
   columns: Column[];
   selection?: boolean;
   actions?: React.ReactNode;
+  sort?: (newSortBy: string) => void;
+  sortBy?: string;
+  sortType?: SortType;
+  page?: number;
+  setPage?: (val: number) => void;
+  itemsPerPage?: number;
+  setItemsPerPage?: (val: number) => void;
+  dataPagination?: PaginatedResponse<any>;
 };
 
-const DataTable = ({ items, columns, selection, actions }: Props) => {
+const DataTable = ({
+  items,
+  columns,
+  selection,
+  actions,
+  sort,
+  sortBy,
+  sortType,
+  page,
+  setPage,
+  itemsPerPage,
+  setItemsPerPage,
+  dataPagination,
+}: Props) => {
   const [selectedAll, setSelectedAll] = useState<"indeterminate" | boolean>(
     false
   );
@@ -76,9 +100,28 @@ const DataTable = ({ items, columns, selection, actions }: Props) => {
                 />
               </TableHead>
             )}
-            {columns.map((column) => (
-              <TableHead className="w-24 text-black text-nowrap">
-                {column.header}
+            {columns.map((column, i) => (
+              <TableHead
+                key={i}
+                className={`w-24 text-black text-nowrap ${
+                  sortBy === column.sortKey ? "font-semibold" : "font-medium"
+                }`}
+              >
+                <button
+                  disabled={!column.sortKey}
+                  onClick={() => sort?.(column.sortKey)}
+                  className="flex items-center gap-2"
+                >
+                  {column.header}
+
+                  {sortBy && sortBy === column.sortKey && (
+                    <CaretDownIcon
+                      className={`w-4 h-4 fill-black ${
+                        sortType === "DESC" ? "rotate-0" : "rotate-180"
+                      }`}
+                    />
+                  )}
+                </button>
               </TableHead>
             ))}
             <TableHead className="w-20 text-black text-nowrap">
@@ -103,8 +146,8 @@ const DataTable = ({ items, columns, selection, actions }: Props) => {
                   </TableCell>
                 )}
 
-                {columns.map((column) => (
-                  <TableCell className="text-nowrap font-medium">
+                {columns.map((column, i) => (
+                  <TableCell key={i} className="text-nowrap font-medium">
                     {column.value(item)}
                   </TableCell>
                 ))}
@@ -128,9 +171,17 @@ const DataTable = ({ items, columns, selection, actions }: Props) => {
         </TableBody>
       </Table>
 
-      {selection && (
-        <div className="mt-4 text-sm">Selected {selected.length}</div>
-      )}
+      <div className="w-full p-4 flex justify-between items-center">
+        {selection && <div className="text-sm">Selected {selected.length}</div>}
+
+        <Pagination
+          currentPage={page}
+          setPage={setPage}
+          dataPagination={dataPagination}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+        />
+      </div>
     </div>
   );
 };

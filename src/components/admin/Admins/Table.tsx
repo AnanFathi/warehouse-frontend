@@ -1,6 +1,6 @@
 "use client";
 
-import DataTable, { Column } from "@/components/DataTable";
+import DataTable, { Column } from "@/components/Table/DataTable";
 
 type User = {
   id: string;
@@ -161,6 +161,7 @@ const columns: Column[] = [
   {
     header: "Username",
     value: (user: User) => user.username,
+    sortKey: "username",
   },
   {
     header: "Password",
@@ -173,7 +174,30 @@ const columns: Column[] = [
 ];
 
 const Table = () => {
-  return <DataTable items={testUsers} columns={columns} selection />;
+  return (
+    <DataTable
+      items={testUsers}
+      columns={columns}
+      selection
+      sortBy="username"
+      sortType="DESC"
+      itemsPerPage={10}
+      page={1}
+      dataPagination={
+        {
+          data: 
+          {
+            data: testUsers,
+            itemsPerPage: 10,
+            totalItems: 100,
+            currentPage: 1,
+            totalPages: 10,
+          },
+          message: '',
+        }
+      }
+    />
+  );
 };
 
 export default Table;
