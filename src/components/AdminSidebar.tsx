@@ -84,7 +84,7 @@ export function AdminSidebar() {
   return (
     <div className="relative bg-transparent">
       {isMobile && (
-        <div className="absolute top-24 -end-10 z-10">
+        <div className="absolute top-4 -end-12 z-10">
           <SideBarButton dir={i18n.dir()} />
         </div>
       )}
@@ -94,11 +94,11 @@ export function AdminSidebar() {
         side={i18n.dir() === "ltr" ? "left" : "right"}
         collapsible="icon"
       >
-        <div className="absolute top-24 -end-5 z-20">
+        <div className="absolute top-4 -end-5 z-20">
           <SideBarButton dir={i18n.dir()} />
         </div>
 
-        <SidebarHeader className="items-center py-6">
+        <SidebarHeader className="items-center py-4">
           <Image alt="" src="/images/logo.png" width={50} height={50} />
         </SidebarHeader>
 

@@ -16,6 +16,7 @@ type Props = {
   icon?: React.ReactNode;
   isPassword?: boolean;
   className?: string;
+  inputClassName?: string;
 };
 
 const TextInput = ({
@@ -27,11 +28,12 @@ const TextInput = ({
   icon,
   isPassword,
   className,
+  inputClassName,
 }: Props) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={twMerge("flex flex-col gap-2", className)}>
       {label && (
         <Label htmlFor="email" className="text-lg text-primary">
           {label}
@@ -57,7 +59,7 @@ const TextInput = ({
             `h-14 border-2 focus:border-primary rounded-lg ${
               icon ? "ps-12" : ""
             } ${isPassword ? "pe-12" : ""}`,
-            className
+            inputClassName
           )}
           style={{ fontSize: 20 }}
         />

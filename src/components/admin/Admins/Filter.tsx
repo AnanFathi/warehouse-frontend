@@ -1,18 +1,35 @@
 "use client";
 
-import { Dropdown } from "@/components/Dropdown";
 import TextInput from "@/components/TextInput";
+import { Dropdown } from "@/components/Dropdown";
+import { Button } from "@/components/ui/button";
+import { useResponsiveSize } from "@/hooks/useResponsiveSize";
 import { getTailwindColor } from "@/lib/utils";
-import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";
+import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 
 const Filter = () => {
   const { t } = useTranslation();
+  const {
+    containerRef,
+    outFlags: {
+      width: [breakpoint1, breakpoint2],
+    },
+  } = useResponsiveSize({
+    breakpoints: [725, 440],
+  });
   const roles = ["ADMIN", "SUPER_ADMIN"];
 
   return (
-    <div className="flex flex-row">
-      <div className="flex flex-row gap-4">
+    <div
+      ref={containerRef}
+      className={`flex gap-4 ${
+        breakpoint1 ? "flex-col" : "flex-row justify-between items-center"
+      } ${breakpoint2 ? "items-stretch" : "items-end"}`}
+    >
+      <div
+        className={`flex gap-4 w-full ${breakpoint2 ? "flex-col" : "flex-row"}`}
+      >
         <TextInput
           placeholder={t("Search")}
           value={""}
@@ -23,7 +40,10 @@ const Filter = () => {
               color={getTailwindColor("neutral-500")}
             />
           }
-          className="h-12 w-96 rounded-xl"
+          className={`rounded-xl ${
+            breakpoint2 ? "w-full" : breakpoint1 ? "w-2/3" : "w-96"
+          }`}
+          inputClassName="h-12"
         />
 
         <Dropdown
@@ -31,9 +51,15 @@ const Filter = () => {
           chosenValue={""}
           placeholder={t("ROLE")}
           setChosenValue={(val: string | string[]) => {}}
-          buttonClassName="h-full w-40"
+          buttonClassName={`h-12 ${
+            breakpoint2 ? "w-full" : breakpoint1 ? "w-1/3" : "w-40"
+          }`}
         />
       </div>
+
+      <Button className="h-12 rounded-xl text-lg">
+        <PlusIcon color="white" /> Add admin
+      </Button>
     </div>
   );
 };

@@ -91,7 +91,7 @@ const DataTable = ({
   };
 
   return (
-    <div className="h-full flex flex-col border border-neutral-200 rounded-xl overflow-hidden">
+    <div className="h-full flex flex-col justify-between border border-neutral-200 rounded-xl overflow-hidden">
       <Table>
         <TableHeader className="bg-neutral-100 h-12 sticky top-0 z-10">
           <TableRow>
@@ -183,7 +183,7 @@ const DataTable = ({
         </TableBody>
       </Table>
 
-      <div className="w-full p-4 flex justify-between items-center">
+      <div className="w-full p-4 flex justify-center sm:justify-end items-center">
         {selection && <div className="text-sm">Selected {selected.length}</div>}
 
         <Pagination

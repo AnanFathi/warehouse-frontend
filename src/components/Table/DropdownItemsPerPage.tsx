@@ -53,7 +53,7 @@ export function DropdownItemsPerPage({
       <DropdownMenuContent>
         <DropdownMenuRadioGroup
           value={itemsPerPage?.toString()}
-          onValueChange={(value) => setCurrentItemsPerPage(parseInt(value))}
+          onValueChange={(value) => setCurrentItemsPerPage?.(parseInt(value))}
         >
           {Object.keys(itemsPerPageList).map((item) => (
             <DropdownMenuRadioItem

@@ -170,7 +170,11 @@ const columns: Column[] = [
     header: "Status",
     value: (user: User) => (
       <Badge
-        className={user.status === "ACTIVE" ? "text-success bg-success-foreground" : "text-danger bg-danger-foreground"}
+        className={
+          user.status === "ACTIVE"
+            ? "text-success bg-success-foreground"
+            : "text-danger bg-danger-foreground"
+        }
       >
         {user.status}
       </Badge>

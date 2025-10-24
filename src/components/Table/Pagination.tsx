@@ -68,15 +68,22 @@ const Pagination = ({
   return (
     <div
       className={twMerge(
-        "flex flex-col sm:flex-row items-center justify-between gap-0.5 sm:gap-1 lg:gap-2 transition-all",
+        "flex flex-col sm:flex-row items-center justify-between gap-5 transition-all",
         className
       )}
     >
-      <span className="text-xs sm:text-sm">
-        {startItem || 0} - {endItem || 0} {t("OF")} {totalItems || 0}
-      </span>
+      <div className="flex flex-row items-center justify-between gap-5 order-2 sm:order-1">
+        <DropdownItemsPerPage
+          itemsPerPage={itemsPerPage}
+          setCurrentItemsPerPage={setItemsPerPage}
+        />
 
-      <div className="flex items-center">
+        <span className="text-sm">
+          {startItem || 0} - {endItem || 0} {t("OF")} {totalItems || 0}
+        </span>
+      </div>
+
+      <div className="flex items-center order-1 sm:order-2">
         <button
           className="p-2 group"
           disabled={currentPage === 1}
@@ -105,7 +112,7 @@ const Pagination = ({
           <button
             key={pageNumber}
             onClick={() => setPage?.(pageNumber)}
-            className={`px-1 sm:px-2 h-8 text-sm sm:text-base rounded transition-all ${
+            className={`px-2 h-8 rounded transition-all ${
               currentPage === pageNumber
                 ? "bg-secondary text-primary"
                 : "hover:text-primary text-neutral-500"
@@ -143,11 +150,6 @@ const Pagination = ({
           />
         </button>
       </div>
-
-      <DropdownItemsPerPage
-        itemsPerPage={itemsPerPage}
-        setCurrentItemsPerPage={setItemsPerPage}
-      />
     </div>
   );
 };
