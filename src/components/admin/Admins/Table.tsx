@@ -3,7 +3,13 @@
 import DataTable, { Column } from "@/components/Table/DataTable";
 import Badge from "@/components/Badge";
 import { User } from "@/model/user.models";
-import TableSettings from "./TableSettings";
+import TableSettings from "../../Table/TableSettings";
+import {
+  PencilSimpleLineIcon,
+  TrashIcon,
+} from "@phosphor-icons/react/dist/ssr";
+import EditAdminDialog from "./EditAdminDialog";
+import ConfirmationDialog from "@/components/ConfirmationDialog";
 
 const testUsers: User[] = [
   {
@@ -181,10 +187,18 @@ const columns: Column[] = [
       </Badge>
     ),
   },
+];
+
+const settings = [
   {
-    header: "",
-    cellClassName: "w-1 max-w-1",
-    value: (user: User) => <TableSettings user={user} onUpdate={() => {}} />,
+    label: "Edit",
+    icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
+    dialog: EditAdminDialog,
+  },
+  {
+    label: "Delete",
+    icon: <TrashIcon className="fill-red-600" size={18} />,
+    dialog: ConfirmationDialog,
   },
 ];
 
@@ -207,6 +221,7 @@ const Table = () => {
         },
         message: "",
       }}
+      settings={settings}
     />
   );
 };

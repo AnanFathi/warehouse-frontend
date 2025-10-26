@@ -25,3 +25,9 @@ export type PaginatedResponse<T> = ServerResponse<IPaginated<T>>;
 export type SortType = "ASC" | "DESC";
 
 export type Dir = "ltr" | "rtl";
+
+export type DialogSettings<T> = {
+  open: boolean;
+  setOpen: (val: boolean) => void;
+  item: T;
+};

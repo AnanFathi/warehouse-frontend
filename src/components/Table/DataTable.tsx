@@ -11,9 +11,10 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { CaretDownIcon } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
-import { PaginatedResponse, SortType } from "@/model/shared.models";
+import { DialogSettings, PaginatedResponse, SortType } from "@/model/shared.models";
 import { twMerge } from "tailwind-merge";
 import Pagination from "./Pagination";
+import TableSettings from "./TableSettings";
 
 export type Column = {
   header: string;
@@ -27,7 +28,6 @@ type Props = {
   items: any[];
   columns: Column[];
   selection?: boolean;
-  actions?: React.ReactNode;
   sort?: (newSortBy: string) => void;
   sortBy?: string;
   sortType?: SortType;
@@ -36,13 +36,17 @@ type Props = {
   itemsPerPage?: number;
   setItemsPerPage?: (val: number) => void;
   dataPagination?: PaginatedResponse<any>;
+  settings: {
+    label: string;
+    icon: React.ReactNode;
+    dialog: React.ComponentType<DialogSettings<any>>;
+  }[];
 };
 
 const DataTable = ({
   items,
   columns,
   selection,
-  actions,
   sort,
   sortBy,
   sortType,
@@ -51,6 +55,7 @@ const DataTable = ({
   itemsPerPage,
   setItemsPerPage,
   dataPagination,
+  settings,
 }: Props) => {
   const [selectedAll, setSelectedAll] = useState<"indeterminate" | boolean>(
     false
@@ -126,6 +131,12 @@ const DataTable = ({
                 </button>
               </TableHead>
             ))}
+
+            {settings && (
+              <TableHead className="w-20 text-black text-nowrap">
+                Actions
+              </TableHead>
+            )}
           </TableRow>
         </TableHeader>
 
@@ -156,6 +167,15 @@ const DataTable = ({
                     {column.value(item)}
                   </TableCell>
                 ))}
+
+                {settings && (
+                  <TableCell>
+                    <TableSettings
+                      settings={settings}
+                      item={item}
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             ))}
         </TableBody>

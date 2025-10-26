@@ -12,15 +12,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { getTailwindColor } from "@/lib/utils";
+import { DialogSettings } from "@/model/shared.models";
+import { User } from "@/model/user.models";
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 
-type Props = {
-  open: boolean;
-  setOpen: (val: boolean) => void;
-};
-
-const EditUserDialog = ({ open, setOpen }: Props) => {
+const EditAdminDialog = ({ open, setOpen, item }: DialogSettings<User>) => {
   const { t } = useTranslation();
 
   return (
@@ -30,8 +27,7 @@ const EditUserDialog = ({ open, setOpen }: Props) => {
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
+              {item?.username}
             </DialogDescription>
           </DialogHeader>
 
@@ -60,4 +56,4 @@ const EditUserDialog = ({ open, setOpen }: Props) => {
   );
 };
 
-export default EditUserDialog;
+export default EditAdminDialog;
