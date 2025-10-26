@@ -13,11 +13,7 @@ import { DotsThreeVerticalIcon } from "@phosphor-icons/react/dist/ssr";
 import { DialogSettings } from "@/model/shared.models";
 
 type Props = {
-  settings: {
-    label: string;
-    icon: React.ReactNode;
-    dialog: React.ComponentType<DialogSettings<any>>;
-  }[];
+  settings: DialogSettings[];
   item: any;
 };
 

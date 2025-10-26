@@ -1,56 +1,63 @@
 "use client";
 
 import TextInput from "@/components/TextInput";
+import { Dropdown } from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { getTailwindColor } from "@/lib/utils";
-import { DialogSettings } from "@/model/shared.models";
+import { DialogProps } from "@/model/shared.models";
 import { User } from "@/model/user.models";
-import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 
-const EditAdminDialog = ({ open, setOpen, item }: DialogSettings<User>) => {
+const EditAdminDialog = ({ open, setOpen, item }: DialogProps<User>) => {
   const { t } = useTranslation();
+  const roles = ["ADMIN", "SUPER_ADMIN"];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <form>
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              {item?.username}
-            </DialogDescription>
-          </DialogHeader>
+      <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
+        <DialogHeader className="text-left">
+          <DialogTitle className="text-xl">Edit admin</DialogTitle>
+        </DialogHeader>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
           <TextInput
             label={t("USERNAME")}
             placeholder={t("ENTER_USERNAME")}
             value={""}
             setValue={() => {}}
-            icon={
-              <EnvelopeSimpleIcon
-                size={25}
-                color={getTailwindColor("primary")}
-              />
-            }
+            className="w-full"
           />
 
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
-        </form>
+          <TextInput
+            label={t("PASSWORD")}
+            placeholder={t("ENTER_PASSWORD")}
+            value={""}
+            setValue={() => {}}
+            className="w-full"
+          />
+
+          <Dropdown
+            items={roles}
+            chosenValue={""}
+            placeholder={t("ROLE")}
+            setChosenValue={(val: string | string[]) => {}}
+          />
+        </div>
+
+        <DialogFooter className="flex flex-row justify-end gap-2">
+          <DialogClose asChild>
+            <Button variant="secondary">Cancel</Button>
+          </DialogClose>
+
+          <Button type="submit">Add</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

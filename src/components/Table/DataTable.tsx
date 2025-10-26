@@ -36,11 +36,7 @@ type Props = {
   itemsPerPage?: number;
   setItemsPerPage?: (val: number) => void;
   dataPagination?: PaginatedResponse<any>;
-  settings: {
-    label: string;
-    icon: React.ReactNode;
-    dialog: React.ComponentType<DialogSettings<any>>;
-  }[];
+  settings: DialogSettings[];
 };
 
 const DataTable = ({

@@ -51,9 +51,9 @@ const Filter = () => {
           chosenValue={""}
           placeholder={t("ROLE")}
           setChosenValue={(val: string | string[]) => {}}
-          buttonClassName={`h-12 ${
+          buttonClassName={
             breakpoint2 ? "w-full" : breakpoint1 ? "w-1/3" : "w-40"
-          }`}
+          }
         />
       </div>
 

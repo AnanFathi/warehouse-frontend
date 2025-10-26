@@ -26,8 +26,14 @@ export type SortType = "ASC" | "DESC";
 
 export type Dir = "ltr" | "rtl";
 
-export type DialogSettings<T> = {
+export type DialogProps<T> = {
   open: boolean;
   setOpen: (val: boolean) => void;
   item: T;
+};
+
+export type DialogSettings = {
+  label: string;
+  icon: React.ReactNode;
+  dialog: React.ComponentType<DialogProps<any>>;
 };

@@ -17,6 +17,8 @@ type Props = {
   isPassword?: boolean;
   className?: string;
   inputClassName?: string;
+  labelClassName?: string;
+  fontSize?: number;
 };
 
 const TextInput = ({
@@ -29,13 +31,15 @@ const TextInput = ({
   isPassword,
   className,
   inputClassName,
+  labelClassName,
+  fontSize = 16,
 }: Props) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
   return (
     <div className={twMerge("flex flex-col gap-2", className)}>
       {label && (
-        <Label htmlFor="email" className="text-lg text-primary">
+        <Label htmlFor="email" className={labelClassName}>
           {label}
         </Label>
       )}
@@ -56,12 +60,12 @@ const TextInput = ({
           type={isPassword && !isPasswordShown ? "password" : type}
           placeholder={placeholder}
           className={twMerge(
-            `h-14 border-2 focus:border-primary rounded-lg ${
-              icon ? "ps-12" : ""
-            } ${isPassword ? "pe-12" : ""}`,
+            `h-12 border-2 rounded-lg ${icon ? "ps-12" : ""} ${
+              isPassword ? "pe-12" : ""
+            }`,
             inputClassName
           )}
-          style={{ fontSize: 20 }}
+          style={{ fontSize }}
         />
 
         {isPassword && (

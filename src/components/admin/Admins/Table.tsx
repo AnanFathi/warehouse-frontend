@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import EditAdminDialog from "./EditAdminDialog";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
+import { DialogSettings } from "@/model/shared.models";
 
 const testUsers: User[] = [
   {
@@ -189,7 +190,7 @@ const columns: Column[] = [
   },
 ];
 
-const settings = [
+const settings: DialogSettings[] = [
   {
     label: "Edit",
     icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,

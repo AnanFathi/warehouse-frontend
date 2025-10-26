@@ -21,6 +21,9 @@ const Form = () => {
         placeholder={t("ENTER_USERNAME")}
         value={email}
         setValue={setEmail}
+        labelClassName="text-lg text-primary"
+        inputClassName="h-14 focus:border-primary"
+        fontSize={20}
         icon={
           <EnvelopeSimpleIcon size={25} color={getTailwindColor("primary")} />
         }
@@ -32,6 +35,9 @@ const Form = () => {
         value={password}
         setValue={setPassword}
         icon={<KeyIcon size={25} color={getTailwindColor("primary")} />}
+        labelClassName="text-lg text-primary"
+        inputClassName="h-14 focus:border-primary"
+        fontSize={20}
         isPassword
       />
 

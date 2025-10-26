@@ -102,7 +102,7 @@ export function Dropdown({
           <Button
             variant="ghost"
             className={twMerge(
-              "border rounded-xl flex justify-start relative font-medium bg-white hover:bg-white focus:outline-none focus-visible:outline-none",
+              "h-12 border rounded-lg flex justify-start relative font-medium bg-white hover:bg-white focus:outline-none focus-visible:outline-none",
               buttonClassName
             )}
           >
