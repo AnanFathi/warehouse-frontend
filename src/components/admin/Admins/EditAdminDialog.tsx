@@ -41,9 +41,11 @@ const EditAdminDialog = ({ open, setOpen, item }: DialogProps<User>) => {
             value={""}
             setValue={() => {}}
             className="w-full"
+            isPassword
           />
 
           <Dropdown
+            label={t("Role")}
             items={roles}
             chosenValue={""}
             placeholder={t("ROLE")}

@@ -29,11 +29,13 @@ export type Dir = "ltr" | "rtl";
 export type DialogProps<T> = {
   open: boolean;
   setOpen: (val: boolean) => void;
-  item: T;
+  item?: T;
+  onAction?: (item: T) => void;
 };
 
 export type DialogSettings = {
   label: string;
   icon: React.ReactNode;
   dialog: React.ComponentType<DialogProps<any>>;
+  onAction?: (item: any) => void;
 };

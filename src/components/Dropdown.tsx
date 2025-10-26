@@ -13,8 +13,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { CaretDownIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
+import { Label } from "./ui/label";
 
 type Props = {
+  label?: string;
   setChosenValue: (val: string | string[]) => void;
   chosenValue?: string | string[];
   placeholder?: string;
@@ -24,6 +26,7 @@ type Props = {
   buttonClassName?: string;
   dropdownClassName?: string;
   itemClassName?: string;
+  labelClassName?: string;
   translateItems?: boolean;
   translateDisplayItems?: boolean;
   multiSelect?: boolean;
@@ -34,6 +37,7 @@ type Props = {
 };
 
 export function Dropdown({
+  label,
   setChosenValue,
   chosenValue,
   placeholder,
@@ -43,6 +47,7 @@ export function Dropdown({
   buttonClassName,
   dropdownClassName,
   itemClassName,
+  labelClassName,
   translateItems = true,
   translateDisplayItems = true,
   multiSelect = false,
@@ -98,27 +103,31 @@ export function Dropdown({
   return (
     <>
       <DropdownMenu onOpenChange={setOpen}>
-        <DropdownMenuTrigger asChild disabled={disabled}>
-          <Button
-            variant="ghost"
-            className={twMerge(
-              "h-12 border rounded-lg flex justify-start relative font-medium bg-white hover:bg-white focus:outline-none focus-visible:outline-none",
-              buttonClassName
-            )}
-          >
-            <p className="truncate w-fit max-w-[calc(100%-8px)]">
-              {renderDisplayText()}
-            </p>
+        <div className="flex flex-col gap-2">
+          {label && <Label className={labelClassName}>{label}</Label>}
 
-            <div className="absolute end-2">
-              <CaretDownIcon
-                className={`fill-primary transition-transform ${
-                  open ? "rotate-180" : ""
-                }`}
-              />
-            </div>
-          </Button>
-        </DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild disabled={disabled}>
+            <Button
+              variant="ghost"
+              className={twMerge(
+                "h-12 border rounded-lg flex justify-start relative font-medium bg-white hover:bg-white focus:outline-none focus-visible:outline-none",
+                buttonClassName
+              )}
+            >
+              <p className="truncate w-fit max-w-[calc(100%-8px)]">
+                {renderDisplayText()}
+              </p>
+
+              <div className="absolute end-2">
+                <CaretDownIcon
+                  className={`fill-primary transition-transform ${
+                    open ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
+            </Button>
+          </DropdownMenuTrigger>
+        </div>
 
         <DropdownMenuContent
           className={twMerge(

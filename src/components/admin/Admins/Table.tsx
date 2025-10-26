@@ -200,6 +200,7 @@ const settings: DialogSettings[] = [
     label: "Delete",
     icon: <TrashIcon className="fill-red-600" size={18} />,
     dialog: ConfirmationDialog,
+    onAction: (user: User) => console.log("DELETE: ", user?.username)
   },
 ];
 

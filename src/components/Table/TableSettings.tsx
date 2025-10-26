@@ -66,6 +66,7 @@ export default function TableSettings({ settings, item }: Props) {
               setOpen((prev) => prev.map((v, j) => (j === i ? val : v)))
             }
             item={item}
+            onAction={setting.onAction}
           />
         );
       })}

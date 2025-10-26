@@ -9,14 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { DialogProps } from "@/model/shared.models";
 import { useTranslation } from "react-i18next";
 
-type Props = {
-  open: boolean;
-  setOpen: (val: boolean) => void;
-};
-
-const ConfirmationDialog = ({ open, setOpen }: Props) => {
+const ConfirmationDialog = ({ open, setOpen, item, onAction }: DialogProps<any>) => {
   const { t } = useTranslation();
 
   return (
@@ -28,10 +24,19 @@ const ConfirmationDialog = ({ open, setOpen }: Props) => {
 
         <DialogFooter className="flex flex-row justify-center gap-2">
           <DialogClose asChild>
-            <Button variant="secondary" className="w-full">Cancel</Button>
+            <Button variant="secondary" className="w-full">
+              Cancel
+            </Button>
           </DialogClose>
 
-          <Button type="submit" className="w-full">Submit</Button>
+          <Button
+            onClick={() => {
+              onAction?.(item);
+            }}
+            className="w-full"
+          >
+            Submit
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
