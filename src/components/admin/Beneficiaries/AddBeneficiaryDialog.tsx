@@ -1,5 +1,6 @@
 "use client";
 
+import FileDropzone from "@/components/FileDropzone";
 import TextInput from "@/components/TextInput";
 import { Button } from "@/components/ui/button";
 import {
@@ -74,6 +75,8 @@ const AddBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
 
               <Button variant="secondary">Download</Button>
             </div>
+
+            <FileDropzone />
           </div>
         )}
 
