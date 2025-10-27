@@ -67,7 +67,7 @@ const Filter = () => {
           onClick={() => setOpenAddAdmin(true)}
           className="h-12 rounded-xl text-lg"
         >
-          <PlusIcon color="white" weight="bold" /> Add admin
+          <PlusIcon color="white" weight="bold" /> Add beneficiary
         </Button>
       </div>
 

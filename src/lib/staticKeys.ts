@@ -7,4 +7,5 @@ export const displayAdminNames: Record<string, string> = {
   dashboard: "DASHBOARD",
   admins: "ADMINS",
   beneficiaries: "BENEFICIARIES",
+  sessions: "SESSIONS",
 };

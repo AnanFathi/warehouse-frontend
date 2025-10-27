@@ -17,7 +17,7 @@ import Pagination from "./Pagination";
 import TableSettings from "./TableSettings";
 
 export type Column = {
-  header: string;
+  header: (item: any) => React.ReactNode;
   value: (item: any) => React.ReactNode;
   sortKey?: string;
   headerClassName?: string;
@@ -113,9 +113,9 @@ const DataTable = ({
                 <button
                   disabled={!column.sortKey}
                   onClick={() => sort?.(column.sortKey)}
-                  className="flex items-center gap-2"
+                  className="w-full h-full flex items-center gap-2"
                 >
-                  {column.header}
+                  {column.header(column)}
 
                   {sortBy && sortBy === column.sortKey && (
                     <CaretDownIcon

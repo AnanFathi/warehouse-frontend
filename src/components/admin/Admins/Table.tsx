@@ -161,12 +161,12 @@ const testUsers: User[] = [
 
 const columns: Column[] = [
   {
-    header: "Username",
+    header: () =>  "Username",
     value: (user: User) => user.username,
     sortKey: "username",
   },
   {
-    header: "Role",
+    header: () =>  "Role",
     value: (user: User) => (
       <Badge className={user.role === "ADMIN" && "text-primary bg-secondary"}>
         {user.role}
@@ -174,7 +174,7 @@ const columns: Column[] = [
     ),
   },
   {
-    header: "Status",
+    header: () =>  "Status",
     value: (user: User) => (
       <Badge
         className={

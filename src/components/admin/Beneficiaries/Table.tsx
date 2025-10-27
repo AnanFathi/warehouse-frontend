@@ -1,7 +1,6 @@
 "use client";
 
 import DataTable, { Column } from "@/components/Table/DataTable";
-import Badge from "@/components/Badge";
 import { User } from "@/model/user.models";
 import {
   PencilSimpleLineIcon,
@@ -256,20 +255,20 @@ const testUsers: User[] = [
 
 const columns: Column[] = [
   {
-    header: "User ID",
+    header: () =>  "User ID",
     value: (user: User) => user.id,
   },
   {
-    header: "Username / case management number",
+    header: () =>  "Username / case management number",
     value: (user: User) => user.username,
     sortKey: "username",
   },
   {
-    header: "Beneficiary Name",
+    header: () =>  "Beneficiary Name",
     value: (user: User) => user.beneficiaryName,
   },
   {
-    header: "Session Type",
+    header: () =>  "Session Type",
     value: (user: User) => user.sessionType,
   },
 ];
