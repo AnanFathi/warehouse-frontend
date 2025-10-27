@@ -8,4 +8,5 @@ export const displayAdminNames: Record<string, string> = {
   admins: "ADMINS",
   beneficiaries: "BENEFICIARIES",
   sessions: "SESSIONS",
+  projects: "PROJECTS",
 };
