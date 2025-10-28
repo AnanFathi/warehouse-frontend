@@ -60,7 +60,7 @@ const TextInput = ({
           type={isPassword && !isPasswordShown ? "password" : type}
           placeholder={placeholder}
           className={twMerge(
-            `h-12 border-2 rounded-lg ${icon ? "ps-12" : ""} ${
+            `h-12 bg-white border-2 rounded-lg ${icon ? "ps-12" : ""} ${
               isPassword ? "pe-12" : ""
             }`,
             inputClassName
