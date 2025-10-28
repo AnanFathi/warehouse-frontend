@@ -1,7 +1,7 @@
 "use client";
 
 import TextInput from "@/components/TextInput";
-import { Dropdown } from "@/components/Dropdown";
+import Dropdown from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,10 +15,16 @@ import { DialogProps } from "@/model/shared.models";
 import { User } from "@/model/user.models";
 import { useTranslation } from "react-i18next";
 import { Label } from "../../ui/label";
+import { useState } from "react";
 
 const EditAdminDialog = ({ open, setOpen, item }: DialogProps<User>) => {
   const { t } = useTranslation();
-  const roles = ["ADMIN", "SUPER_ADMIN"];
+  const [selected, setSelected] = useState([]);
+
+  const roles = [
+    { value: "ADMIN", label: "ADMIN" },
+    { value: "SUPER_ADMIN", label: "SUPER_ADMIN" },
+  ];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -49,9 +55,9 @@ const EditAdminDialog = ({ open, setOpen, item }: DialogProps<User>) => {
             <Label>{t("ROLE")}</Label>
             <Dropdown
               items={roles}
-              chosenValue={""}
+              selected={selected}
               placeholder={t("ROLE")}
-              setChosenValue={(val: string | string[]) => {}}
+              setSelected={setSelected}
             />
           </div>
         </div>

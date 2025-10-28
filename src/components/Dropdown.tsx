@@ -1,256 +1,243 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
-import { twMerge } from "tailwind-merge";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { CaretDownIcon, CircleNotchIcon } from "@phosphor-icons/react/dist/ssr";
+import { twMerge } from "tailwind-merge";
 import { useTranslation } from "react-i18next";
-import { CaretDownIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
+import { Input } from "@/components/ui/input";
 
 type Props = {
-  setChosenValue: (val: string | string[]) => void;
-  chosenValue?: string | string[];
+  selected: string | string[];
+  setSelected: ((val: string) => void) | ((val: string[]) => void);
+  items: { label: string; value: string }[];
+  noneOptionValue?: string;
+  allOptionValue?: string;
+  showNoneOption?: boolean;
+  showAllOption?: boolean;
+  className?: string;
+  contentClassName?: string;
   placeholder?: string;
   placeholderOnly?: boolean;
-  items: string[];
-  displayItems?: string[];
-  buttonClassName?: string;
-  dropdownClassName?: string;
-  itemClassName?: string;
-  translateItems?: boolean;
-  translateDisplayItems?: boolean;
-  multiSelect?: boolean;
-  previewChosenValues?: boolean;
   disabled?: boolean;
-  showNullOption?: boolean;
-  nullOptionValue?: string;
+  onReachTheEnd?: () => void;
+  loadingData?: boolean;
+  multiSelect?: boolean;
+  searchable?: boolean;
+  searchValue?: string;
+  setSearchValue?: (val: string) => void;
+  searchPlaceholder?: string;
 };
 
-export function Dropdown({
-  setChosenValue,
-  chosenValue,
-  placeholder,
-  placeholderOnly = false,
+export default function Dropdown({
+  selected,
+  setSelected,
   items,
-  displayItems,
-  buttonClassName,
-  dropdownClassName,
-  itemClassName,
-  translateItems = true,
-  translateDisplayItems = true,
-  multiSelect = false,
-  previewChosenValues = false,
+  noneOptionValue = "NONE",
+  allOptionValue = "ALL",
+  showNoneOption,
+  showAllOption,
+  className,
+  contentClassName,
+  placeholder = "SELECT",
+  placeholderOnly = false,
   disabled = false,
-  showNullOption = true,
-  nullOptionValue = "",
+  onReachTheEnd,
+  loadingData = false,
+  multiSelect = false,
+  searchable = false,
+  searchValue,
+  setSearchValue,
+  searchPlaceholder = "SEARCH",
 }: Props) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
 
-  const getDisplayName = (value: string) => {
-    if (!displayItems || items.length !== displayItems.length) return value;
-    const index = items.indexOf(value);
-    return displayItems[index] ?? value;
+  const renderSelectedText = () => {
+    if (placeholderOnly) return t(placeholder);
+
+    // 🧠 If nothing selected, show placeholder (even if showNoneOption is true)
+    if (!selected || (Array.isArray(selected) && selected.length === 0)) {
+      return t(placeholder);
+    }
+
+    if (Array.isArray(selected)) {
+      return items
+        .filter((val) => selected.includes(val.value))
+        .map((val) => val.label)
+        .join(", ");
+    }
+
+    const selectedValue =
+      items?.find((item) => item.value === selected)?.label || selected;
+    return t(selectedValue);
   };
 
-  const renderDisplayText = () => {
-    if (placeholderOnly) return t(placeholder || "");
+  const handleSelectMultiple = (item: string) => {
+    if (!multiSelect || !Array.isArray(selected)) return;
 
-    if (
-      !chosenValue ||
-      (Array.isArray(chosenValue) && chosenValue.length === 0)
-    ) {
-      return t(placeholder || "");
-    }
+    const newSelected = selected.includes(item)
+      ? selected.filter((val) => val !== item)
+      : [...selected, item];
 
-    if (Array.isArray(chosenValue)) {
-      return chosenValue.map((val) => t(getDisplayName(val))).join(", ");
-    }
-
-    return t(getDisplayName(chosenValue));
+    (setSelected as (val: string[]) => void)(newSelected);
   };
 
-  const handleSelect = (item: string) => {
-    if (!Array.isArray(chosenValue)) return;
-
-    const newSelected = chosenValue.includes(item)
-      ? chosenValue.filter((val) => val !== item)
-      : [...chosenValue, item];
-
-    (setChosenValue as Dispatch<SetStateAction<string[]>>)(newSelected);
-
-    if (displayItems) {
-      const newDisplay = items
-        .map((code, idx) =>
-          newSelected.includes(code) ? displayItems[idx] : null
-        )
-        .filter((val): val is string => val !== null);
-    }
+  const handleSelectSingle = (value: string) => {
+    (setSelected as (val: string) => void)(value);
   };
 
   return (
-    <>
-      <DropdownMenu onOpenChange={setOpen}>
-        <DropdownMenuTrigger asChild disabled={disabled}>
-          <Button
-            variant="ghost"
-            className={twMerge(
-              "h-12 border rounded-lg flex justify-start relative font-medium bg-white hover:bg-white focus:outline-none focus-visible:outline-none",
-              buttonClassName
-            )}
-          >
-            <p className="truncate w-fit max-w-[calc(100%-8px)]">
-              {renderDisplayText()}
-            </p>
-
-            <div className="absolute end-2">
-              <CaretDownIcon
-                className={`fill-primary transition-transform ${
-                  open ? "rotate-180" : ""
-                }`}
-              />
-            </div>
-          </Button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild disabled={disabled}>
+        <Button
+          variant="outline"
           className={twMerge(
-            "min-w-[--radix-dropdown-menu-trigger-width] max-w-[--radix-dropdown-menu-trigger-width]",
-            dropdownClassName
+            `h-12 max-w-full min-w-0 group justify-between outline-none font-normal border-2 ${
+              !selected && "text-neutral-500"
+            }`,
+            className
           )}
-          onCloseAutoFocus={(e) => e.preventDefault()}
         >
-          {multiSelect ? (
-            items &&
-            items.map((item, i) => {
-              const isSelected =
-                Array.isArray(chosenValue) && chosenValue.includes(item);
+          <p className="truncate">{renderSelectedText()}</p>
 
-              const displayItem = displayItems
-                ? translateDisplayItems
-                  ? t(displayItems[i])
-                  : displayItems[i]
-                : translateItems
-                ? t(item)
-                : item;
+          {loadingData ? (
+            <CircleNotchIcon className="animate-spin fill-primary" />
+          ) : (
+            <CaretDownIcon
+              className="fill-primary ms-2 text-neutral-500 transition-transform duration-200 group-data-[state=open]:rotate-180"
+              aria-hidden="true"
+            />
+          )}
+        </Button>
+      </DropdownMenuTrigger>
 
-              return (
+      <DropdownMenuContent
+        align="start"
+        className={twMerge(
+          "max-h-72 space-y-1 w-[--radix-dropdown-menu-trigger-width]",
+          contentClassName
+        )}
+        onScroll={(e) => {
+          if (loadingData) return;
+
+          const el = e.currentTarget;
+          if (el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
+            onReachTheEnd?.();
+          }
+        }}
+      >
+        {/* Search input */}
+        {searchable && (
+          <div className="p-2">
+            <Input
+              value={searchValue}
+              onChange={(e) => {
+                e.preventDefault();
+                setSearchValue?.(e.target.value);
+              }}
+              onKeyDown={(e) => e.stopPropagation()}
+              placeholder={searchPlaceholder}
+              className="w-full"
+            />
+          </div>
+        )}
+
+        {(showNoneOption || showAllOption) && (
+          <>
+            <div className="flex flex-row justify-center">
+              {/* None option */}
+              {showNoneOption && (
                 <DropdownMenuItem
-                  key={item}
-                  onSelect={(e) => {
-                    if (multiSelect) e.preventDefault();
-                    handleSelect(item);
+                  onClick={(e) => {
+                    // 🧹 Clear selection completely
+                    if (multiSelect) {
+                      e.preventDefault();
+                      (setSelected as (val: string[]) => void)([]);
+                    } else {
+                      (setSelected as (val: string) => void)(undefined);
+                    }
                   }}
                   className={twMerge(
-                    "truncate font-medium px-2 py-2 cursor-pointer flex rtl:justify-end",
-                    itemClassName,
-                    isSelected ? "bg-secondary" : ""
+                    "w-full justify-center hover:!bg-secondary/30 hover:!text-primary",
+                    (!selected ||
+                      (Array.isArray(selected) && selected.length === 0)) &&
+                      "bg-secondary text-primary"
                   )}
                 >
-                  {isSelected ? (
-                    <div className="flex flex-row justify-between w-full">
-                      <div className="order-1 rtl:order-2">{displayItem}</div>
-                      <p className="order-2 rtl:order-1 text-primary">✓</p>
-                    </div>
-                  ) : (
-                    displayItem
-                  )}
+                  {t(noneOptionValue)}
                 </DropdownMenuItem>
-              );
-            })
-          ) : (
-            <DropdownMenuRadioGroup
-              value={chosenValue as string}
-              onValueChange={setChosenValue as Dispatch<SetStateAction<string>>}
-            >
-              {items && (
-                <>
-                  {showNullOption && (
-                    <DropdownMenuRadioItem
-                      value={nullOptionValue}
-                      className={twMerge(
-                        "truncate font-medium px-2 py-2 cursor-pointer flex rtl:justify-end",
-                        itemClassName
-                      )}
-                    >
-                      <p className="text-white">.</p>
-                    </DropdownMenuRadioItem>
-                  )}
-
-                  {items.map((item, i) => {
-                    const displayItem = displayItems
-                      ? translateDisplayItems
-                        ? t(displayItems[i])
-                        : displayItems[i]
-                      : translateItems
-                      ? t(item)
-                      : item;
-
-                    return (
-                      <DropdownMenuRadioItem
-                        key={item}
-                        value={item}
-                        className={twMerge(
-                          "truncate font-medium px-2 py-2 cursor-pointer flex rtl:justify-end",
-                          itemClassName
-                        )}
-                      >
-                        {displayItem}
-                      </DropdownMenuRadioItem>
-                    );
-                  })}
-                </>
               )}
-            </DropdownMenuRadioGroup>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
 
-      {/* Preview selected values */}
-      {multiSelect && previewChosenValues && Array.isArray(chosenValue) && (
-        <div className="mt-4 flex flex-row flex-wrap gap-4">
-          {chosenValue.map((code) => {
-            const display = getDisplayName(code);
-            return (
-              <div
-                key={code}
-                className="bg-white p-2 w-fit h-fit flex flex-row gap-2 justify-between items-center rounded-ts-xl rounded-be-xl"
-              >
-                <p>{t(display)}</p>
-                <button
-                  onClick={() => handleSelect(code)}
-                  className="hover:opacity-70 transition-opacity"
+              {/* ALL Option - only for multi-select */}
+              {multiSelect && showAllOption && (
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const allValues = items.map((item) => item.value);
+                    (setSelected as (val: string[]) => void)(allValues);
+                  }}
+                  className={twMerge(
+                    "w-full justify-center hover:!bg-secondary/30 hover:!text-primary",
+                    Array.isArray(selected) &&
+                      selected.length === items.length &&
+                      "bg-secondary text-primary"
+                  )}
                 >
-                  <XIcon className="w-4 h-4 text-danger" />
-                </button>
-              </div>
+                  {t(allOptionValue)}
+                </DropdownMenuItem>
+              )}
+            </div>
+
+            <DropdownMenuSeparator className="bg-secondary" />
+          </>
+        )}
+
+        {/* Multi Select */}
+        {multiSelect ? (
+          items &&
+          items.map((item) => {
+            const isSelected =
+              Array.isArray(selected) && selected.includes(item?.value);
+
+            return (
+              <DropdownMenuItem
+                key={item?.value}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  handleSelectMultiple(item?.value);
+                }}
+                className={twMerge(
+                  "font-medium px-2 py-2 cursor-pointer flex rtl:justify-end hover:!bg-secondary/30 hover:!text-primary",
+                  isSelected ? "bg-secondary text-primary" : ""
+                )}
+              >
+                <p className="truncate">{t(item.label)}</p>
+              </DropdownMenuItem>
             );
-          })}
-        </div>
-      )}
-    </>
+          })
+        ) : (
+          <>
+            {/* Single Select */}
+            {items.map((item) => (
+              <DropdownMenuItem
+                key={item.value}
+                onClick={() => handleSelectSingle(item.value)}
+                className={`truncate hover:!bg-secondary/30 hover:!text-primary ${
+                  selected === item.value && "bg-secondary text-primary"
+                }`}
+              >
+                <p className="truncate">{t(item.label)}</p>
+              </DropdownMenuItem>
+            ))}
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
-
-export const ChosenValuePreviewCard = ({
-  displayedText,
-}: {
-  displayedText: string;
-}) => {
-  return (
-    <div className="bg-white p-2 w-fit h-fit flex flex-row gap-5 justify-between items-center rounded-ts-xl rounded-be-xl">
-      <p>{displayedText}</p>
-
-      <button>
-        <XIcon className="w-5 h-5 text-danger" />
-      </button>
-    </div>
-  );
-};

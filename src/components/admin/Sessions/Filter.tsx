@@ -1,7 +1,7 @@
 "use client";
 
 import TextInput from "@/components/TextInput";
-import { Dropdown } from "@/components/Dropdown";
+import Dropdown from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import { useResponsiveSize } from "@/hooks/useResponsiveSize";
 import { getTailwindColor } from "@/lib/utils";
@@ -12,6 +12,7 @@ import { useState } from "react";
 const Filter = () => {
   const { t } = useTranslation();
   const [openAddAdmin, setOpenAddAdmin] = useState<boolean>(false);
+  const [selected, setSelected] = useState<string>();
   const {
     containerRef,
     outFlags: {
@@ -20,7 +21,11 @@ const Filter = () => {
   } = useResponsiveSize({
     breakpoints: [725, 440],
   });
-  const roles = ["ADMIN", "SUPER_ADMIN"];
+
+  const roles = [
+    { value: "ADMIN", label: "ADMIN" },
+    { value: "SUPER_ADMIN", label: "SUPER_ADMIN" },
+  ];
 
   return (
     <div
@@ -50,12 +55,11 @@ const Filter = () => {
 
         <Dropdown
           items={roles}
-          chosenValue={""}
+          selected={selected}
           placeholder={t("ROLE")}
-          setChosenValue={(val: string | string[]) => {}}
-          buttonClassName={
-            breakpoint2 ? "w-full" : breakpoint1 ? "w-1/3" : "w-40"
-          }
+          setSelected={setSelected}
+          showNoneOption
+          className={breakpoint2 ? "w-full" : breakpoint1 ? "w-1/3" : "w-40"}
         />
       </div>
 

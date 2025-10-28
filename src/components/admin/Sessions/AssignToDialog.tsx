@@ -1,6 +1,6 @@
 "use client";
 
-import TextInput from "@/components/TextInput";
+import Dropdown from "@/components/Dropdown";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,10 +12,18 @@ import {
 } from "@/components/ui/dialog";
 import { DialogProps } from "@/model/shared.models";
 import { User } from "@/model/user.models";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const AssignToDialog = ({ open, setOpen, item }: DialogProps<User>) => {
   const { t } = useTranslation();
+  const [selected, setSelected] = useState<string>();
+  const [search, setSearch] = useState<string>("");
+
+  const emails = [
+    { value: "1", label: "ali.aboshady@badgewell.com" },
+    { value: "2", label: "hussein.shaltout@badgewell.com" },
+  ];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -24,12 +32,14 @@ const AssignToDialog = ({ open, setOpen, item }: DialogProps<User>) => {
           <DialogTitle className="text-xl">Assign to</DialogTitle>
         </DialogHeader>
 
-        <TextInput
-          label={t("EMAIL")}
+        <Dropdown
+          items={emails}
+          selected={selected}
           placeholder={t("Enter email")}
-          value={""}
-          setValue={() => {}}
-          className="w-full"
+          setSelected={setSelected}
+          searchable
+          searchValue={search}
+          setSearchValue={setSearch}
         />
 
         <DialogFooter className="flex flex-row justify-end gap-2">
