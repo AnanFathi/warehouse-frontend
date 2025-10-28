@@ -8,10 +8,11 @@ import {
   PencilSimpleLineIcon,
   TrashIcon,
 } from "@phosphor-icons/react/dist/ssr";
+import AddSessionDialog from "./AddSessionDialog";
 import EditProjectDialog from "./EditProjectDialog";
+import MoveSessionDialog from "./MoveSessionDialog";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
 import { DialogSettings } from "@/model/shared.models";
-import AddSessionDialog from "./AddSessionDialog";
 import Link from "next/link";
 
 const testUsers: User[] = [
@@ -260,7 +261,7 @@ const settings: DialogSettings[] = [
   {
     label: "Move session",
     icon: <ArrowBendUpLeftIcon className="fill-neutral-600" size={18} />,
-    dialog: EditProjectDialog,
+    dialog: MoveSessionDialog,
   },
   {
     label: "Edit",
