@@ -27,7 +27,7 @@ const AddBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-xl">Add beneficiary</DialogTitle>
+          <DialogTitle className="text-xl">{t("ADD_BENEFICIARY")}</DialogTitle>
 
           <RadioGroup
             defaultValue="individual"
@@ -37,12 +37,12 @@ const AddBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
           >
             <div className="flex items-center gap-3">
               <RadioGroupItem value="individual" id="r1" />
-              <Label htmlFor="r1">Individual</Label>
+              <Label htmlFor="r1">{t("INDIVIDUAL")}</Label>
             </div>
 
             <div className="flex items-center gap-3">
               <RadioGroupItem value="group" id="r2" />
-              <Label htmlFor="r2">Group</Label>
+              <Label htmlFor="r2">{t("GROUP")}</Label>
             </div>
           </RadioGroup>
         </DialogHeader>
@@ -50,16 +50,16 @@ const AddBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
         {type === "individual" ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
             <TextInput
-              label={t("Username / case management number")}
-              placeholder={t("Enter Username / case management number")}
+              label={`${t("USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`}
+              placeholder={`${t("ENTER_USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`}
               value={""}
               setValue={() => {}}
               className="w-full"
             />
 
             <TextInput
-              label={t("Beneficiary Name")}
-              placeholder={t("Enter Beneficiary Name")}
+              label={t("BENEFICIARY_NAME")}
+              placeholder={t("ENTER_BENEFICIARY_NAME")}
               value={""}
               setValue={() => {}}
               className="w-full"
@@ -70,10 +70,10 @@ const AddBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
             <div className="border p-3 rounded-lg flex flex-row justify-between items-center">
               <div className="flex flex-row items-center gap-1">
                 <Image alt="" src="/images/excel.png" width={25} height={35} />
-                <p className="text-[12px] font-medium">Accounts Template</p>
+                <p className="text-[12px] font-medium">{t("ACCOUNTS_TEMPLATE")}</p>
               </div>
 
-              <Button variant="secondary">Download</Button>
+              <Button variant="secondary">{t("DOWNLOAD")}</Button>
             </div>
 
             <FileDropzone />
@@ -82,10 +82,10 @@ const AddBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
 
         <DialogFooter className="flex flex-row justify-end gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("CANCEL")}</Button>
           </DialogClose>
 
-          <Button type="submit">Edit</Button>
+          <Button type="submit">{t("EDIT")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

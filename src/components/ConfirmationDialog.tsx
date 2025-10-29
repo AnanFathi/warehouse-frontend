@@ -19,13 +19,13 @@ const ConfirmationDialog = ({ open, setOpen, item, onAction }: DialogProps<any>)
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px] w-[calc(100%-2rem)] rounded-lg gap-10">
         <DialogHeader className="text-left">
-          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogTitle>{t("ARE_YOU_SURE")}</DialogTitle>
         </DialogHeader>
 
         <DialogFooter className="flex flex-row justify-center gap-2">
           <DialogClose asChild>
             <Button variant="secondary" className="w-full">
-              Cancel
+              {t("CANCEL")}
             </Button>
           </DialogClose>
 
@@ -35,7 +35,7 @@ const ConfirmationDialog = ({ open, setOpen, item, onAction }: DialogProps<any>)
             }}
             className="w-full"
           >
-            Submit
+            {t("SUBMIT")}
           </Button>
         </DialogFooter>
       </DialogContent>

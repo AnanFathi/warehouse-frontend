@@ -31,25 +31,25 @@ const EditProjectDialog = ({ open, setOpen, item }: DialogProps<User>) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-xl">Edit Project</DialogTitle>
+          <DialogTitle className="text-xl">{t("EDIT_PROJECT")}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
           <TextInput
-            label={t("Project name")}
-            placeholder={t("Enter project name")}
+            label={t("PROJECT_NAME")}
+            placeholder={t("ENTER_PROJECT_NAME")}
             value={""}
             setValue={() => {}}
             className="w-full"
           />
 
           <div className="flex flex-col gap-2">
-            <Label>Session type</Label>
+            <Label>{t("SESSION_TYPE")}</Label>
             <Dropdown items={sessionTypes} selected="" setSelected={() => {}} />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>Date</Label>
+            <Label>{t("DATE")}</Label>
             <DatePicker
               date={date}
               setDate={setDate}
@@ -60,10 +60,10 @@ const EditProjectDialog = ({ open, setOpen, item }: DialogProps<User>) => {
 
         <DialogFooter className="flex flex-row justify-end gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("CANCEL")}</Button>
           </DialogClose>
 
-          <Button type="submit">Edit</Button>
+          <Button type="submit">{t("EDIT")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -37,17 +37,17 @@ const MoveSessionDialog = ({ open, setOpen, item }: DialogProps<User>) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-xl">Edit admin</DialogTitle>
+          <DialogTitle className="text-xl">{t("MOVE_SESSION")}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
           <div className="flex flex-col gap-2">
-            <Label>Username / case management number</Label>
+            <Label>{`${t("USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`}</Label>
 
             <Dropdown
               items={usernames}
               selected={selectedUsername}
-              placeholder={t("Enter Username / case management number")}
+              placeholder={`${t("ENTER_USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`}
               setSelected={setSelectedUsername}
               searchable
               searchValue={searchUsername}
@@ -56,11 +56,11 @@ const MoveSessionDialog = ({ open, setOpen, item }: DialogProps<User>) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>Beneficiary Name</Label>
+            <Label>{t("BENEFICIARY_NAME")}</Label>
             <Dropdown
               items={beneficiaries}
               selected={selectedBeneficiary}
-              placeholder={t("Enter Beneficiary Name")}
+              placeholder={t("ENTER_BENEFICIARY_NAME")}
               setSelected={setSelectedBeneficiary}
               searchable
               searchValue={searchBeneficiary}
@@ -71,10 +71,10 @@ const MoveSessionDialog = ({ open, setOpen, item }: DialogProps<User>) => {
 
         <DialogFooter className="flex flex-row justify-end gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("CANCEL")}</Button>
           </DialogClose>
 
-          <Button type="submit">Edit</Button>
+          <Button type="submit">{t("EDIT")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

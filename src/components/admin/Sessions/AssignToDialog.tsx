@@ -29,13 +29,13 @@ const AssignToDialog = ({ open, setOpen, item }: DialogProps<User>) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[400px] w-[calc(100%-2rem)] rounded-lg">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-xl">Assign to</DialogTitle>
+          <DialogTitle className="text-xl">{t("ASSIGN_TO")}</DialogTitle>
         </DialogHeader>
 
         <Dropdown
           items={emails}
           selected={selected}
-          placeholder={t("Enter email")}
+          placeholder={t("ENTER_EMAIL")}
           setSelected={setSelected}
           searchable
           searchValue={search}
@@ -44,10 +44,10 @@ const AssignToDialog = ({ open, setOpen, item }: DialogProps<User>) => {
 
         <DialogFooter className="flex flex-row justify-end gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("CANCEL")}</Button>
           </DialogClose>
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{t("SUBMIT")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

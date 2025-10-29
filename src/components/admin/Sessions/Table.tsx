@@ -15,6 +15,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTranslation } from "react-i18next";
 
 const testUsers: User[] = [
   {
@@ -289,108 +290,110 @@ const testUsers: User[] = [
   },
 ];
 
-const columns: Column[] = [
-  {
-    header: () => "Session name",
-    value: (user: User) => user.sessionName,
-  },
-  {
-    header: () => "Username / case management number",
-    value: (user: User) => user.username,
-    sortKey: "username",
-  },
-  {
-    header: () => "Session Type",
-    value: (user: User) => user.sessionType,
-  },
-  {
-    header: () => "Assignee",
-    value: (user: User) => user.assignee,
-  },
-  {
-    headerClassName: "w-20 pe-10",
-    cellClassName: "w-20 pe-10",
-    header: () => (
-      <div className="w-full flex flex-col justify-center gap-2 py-2">
-        <p>Complete forms</p>
-
-        <div className="flex flex-row justify-between gap-2">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <p className="w-7 h-7 flex items-center justify-center bg-secondary text-primary rounded-full">
-                1
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Needs Assessment Tool</p>
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <p className="w-7 h-7 flex items-center justify-center bg-secondary text-primary rounded-full">
-                2
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Fast-Track Employment</p>
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <p className="w-7 h-7 flex items-center justify-center bg-secondary text-primary rounded-full">
-                3
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Employment Pathway</p>
-            </TooltipContent>
-          </Tooltip>
-        </div>
-      </div>
-    ),
-    value: (user: User) => (
-      //user.completeForms
-      <div className="flex flex-row justify-between gap-2">
-        <p className="w-7 h-7 flex items-center justify-center bg-success text-white rounded-full">
-          1
-        </p>
-        <p className="w-7 h-7 flex items-center justify-center bg-white text-success border border-success rounded-full">
-          2
-        </p>
-        <p className="w-7 h-7 flex items-center justify-center bg-neutral-100 text-neutral-300 rounded-full">
-          3
-        </p>
-      </div>
-    ),
-  },
-  {
-    header: () => "Start date",
-    value: (user: User) => user.startDate,
-  },
-];
-
-const settings: DialogSettings[] = [
-  {
-    label: "Assign to",
-    icon: <UserCheckIcon className="fill-neutral-600" size={18} />,
-    dialog: AssignToDialog,
-  },
-  {
-    label: "Edit session",
-    icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
-    href: "#",
-  },
-  {
-    label: "Delete",
-    icon: <TrashIcon className="fill-red-600" size={18} />,
-    dialog: ConfirmationDialog,
-    onAction: (user: User) => console.log("DELETE: ", user?.username),
-  },
-];
-
 const Table = () => {
+  const { t } = useTranslation();
+
+  const columns: Column[] = [
+    {
+      header: () => t("SESSION_NAME"),
+      value: (user: User) => user.sessionName,
+    },
+    {
+      header: () => `${t("USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`,
+      value: (user: User) => user.username,
+      sortKey: "username",
+    },
+    {
+      header: () => t("SESSION_TYPE"),
+      value: (user: User) => user.sessionType,
+    },
+    {
+      header: () => t("ASSIGNEE"),
+      value: (user: User) => user.assignee,
+    },
+    {
+      headerClassName: "w-20 pe-10",
+      cellClassName: "w-20 pe-10",
+      header: () => (
+        <div className="w-full flex flex-col justify-center gap-2 py-2">
+          <p>{t("COMPLETED_FORMS")}</p>
+
+          <div className="flex flex-row justify-between gap-2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <p className="w-7 h-7 flex items-center justify-center bg-secondary text-primary rounded-full">
+                  1
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("NEEDS_ASSESSMENT_TOOL")}</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <p className="w-7 h-7 flex items-center justify-center bg-secondary text-primary rounded-full">
+                  2
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("FAST_TRACK_EMPLOYMENT")}</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <p className="w-7 h-7 flex items-center justify-center bg-secondary text-primary rounded-full">
+                  3
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("EMPLOYMENT_PATHWAY")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </div>
+      ),
+      value: (user: User) => (
+        //user.completeForms
+        <div className="flex flex-row justify-between gap-2">
+          <p className="w-7 h-7 flex items-center justify-center bg-success text-white rounded-full">
+            1
+          </p>
+          <p className="w-7 h-7 flex items-center justify-center bg-white text-success border border-success rounded-full">
+            2
+          </p>
+          <p className="w-7 h-7 flex items-center justify-center bg-neutral-100 text-neutral-300 rounded-full">
+            3
+          </p>
+        </div>
+      ),
+    },
+    {
+      header: () => t("START_DATE"),
+      value: (user: User) => user.startDate,
+    },
+  ];
+
+  const settings: DialogSettings[] = [
+    {
+      label: t("ASSIGN_TO"),
+      icon: <UserCheckIcon className="fill-neutral-600" size={18} />,
+      dialog: AssignToDialog,
+    },
+    {
+      label: t("EDIT_SESSION"),
+      icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
+      href: "#",
+    },
+    {
+      label: t("DELETE"),
+      icon: <TrashIcon className="fill-red-600" size={18} />,
+      dialog: ConfirmationDialog,
+      onAction: (user: User) => console.log("DELETE: ", user?.username),
+    },
+  ];
+
   return (
     <DataTable
       items={testUsers}

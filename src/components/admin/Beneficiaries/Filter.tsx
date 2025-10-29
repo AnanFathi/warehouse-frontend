@@ -42,7 +42,7 @@ const Filter = () => {
           }`}
         >
           <TextInput
-            placeholder={t("Search")}
+            placeholder={t("SEARCH")}
             value={""}
             setValue={() => {}}
             icon={
@@ -71,7 +71,7 @@ const Filter = () => {
           onClick={() => setOpenAddAdmin(true)}
           className="h-12 rounded-xl text-lg"
         >
-          <PlusIcon color="white" weight="bold" /> Add beneficiary
+          <PlusIcon color="white" weight="bold" /> {t("ADD_BENEFICIARY")}
         </Button>
       </div>
 

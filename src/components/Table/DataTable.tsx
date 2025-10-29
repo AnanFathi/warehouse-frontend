@@ -11,7 +11,11 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { CaretDownIcon } from "@phosphor-icons/react/dist/ssr";
 import { useState } from "react";
-import { DialogSettings, PaginatedResponse, SortType } from "@/model/shared.models";
+import {
+  DialogSettings,
+  PaginatedResponse,
+  SortType,
+} from "@/model/shared.models";
 import { twMerge } from "tailwind-merge";
 import Pagination from "./Pagination";
 import TableSettings from "./TableSettings";
@@ -128,11 +132,7 @@ const DataTable = ({
               </TableHead>
             ))}
 
-            {settings && (
-              <TableHead className="w-20 text-black text-nowrap">
-                Actions
-              </TableHead>
-            )}
+            {settings && <TableHead className="w-20 text-black text-nowrap" />}
           </TableRow>
         </TableHeader>
 
@@ -166,10 +166,7 @@ const DataTable = ({
 
                 {settings && (
                   <TableCell>
-                    <TableSettings
-                      settings={settings}
-                      item={item}
-                    />
+                    <TableSettings settings={settings} item={item} />
                   </TableCell>
                 )}
               </TableRow>

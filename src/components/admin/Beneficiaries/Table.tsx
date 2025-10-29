@@ -9,6 +9,7 @@ import {
 import EditBeneficiaryDialog from "./EditBeneficiaryDialog";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
 import { DialogSettings } from "@/model/shared.models";
+import { useTranslation } from "react-i18next";
 
 const testUsers: User[] = [
   {
@@ -253,41 +254,43 @@ const testUsers: User[] = [
   },
 ];
 
-const columns: Column[] = [
-  {
-    header: () =>  "User ID",
-    value: (user: User) => user.id,
-  },
-  {
-    header: () =>  "Username / case management number",
-    value: (user: User) => user.username,
-    sortKey: "username",
-  },
-  {
-    header: () =>  "Beneficiary Name",
-    value: (user: User) => user.beneficiaryName,
-  },
-  {
-    header: () =>  "Session Type",
-    value: (user: User) => user.sessionType,
-  },
-];
-
-const settings: DialogSettings[] = [
-  {
-    label: "Edit",
-    icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
-    dialog: EditBeneficiaryDialog,
-  },
-  {
-    label: "Delete",
-    icon: <TrashIcon className="fill-red-600" size={18} />,
-    dialog: ConfirmationDialog,
-    onAction: (user: User) => console.log("DELETE: ", user?.username),
-  },
-];
-
 const Table = () => {
+  const { t } = useTranslation();
+
+  const columns: Column[] = [
+    {
+      header: () => t("USER_ID"),
+      value: (user: User) => user.id,
+    },
+    {
+      header: () => `${t("USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`,
+      value: (user: User) => user.username,
+      sortKey: "username",
+    },
+    {
+      header: () => t("BENEFICIARY_NAME"),
+      value: (user: User) => user.beneficiaryName,
+    },
+    {
+      header: () => t("SESSION_TYPE"),
+      value: (user: User) => user.sessionType,
+    },
+  ];
+
+  const settings: DialogSettings[] = [
+    {
+      label: t("EDIT"),
+      icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
+      dialog: EditBeneficiaryDialog,
+    },
+    {
+      label: t("DELETE"),
+      icon: <TrashIcon className="fill-red-600" size={18} />,
+      dialog: ConfirmationDialog,
+      onAction: (user: User) => console.log("DELETE: ", user?.username),
+    },
+  ];
+
   return (
     <DataTable
       items={testUsers}

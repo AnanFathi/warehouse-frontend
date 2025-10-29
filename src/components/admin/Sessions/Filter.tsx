@@ -38,7 +38,7 @@ const Filter = () => {
         className={`flex gap-4 w-full ${breakpoint2 ? "flex-col" : "flex-row"}`}
       >
         <TextInput
-          placeholder={t("Search")}
+          placeholder={t("SEARCH")}
           value={""}
           setValue={() => {}}
           icon={
@@ -67,7 +67,7 @@ const Filter = () => {
         onClick={() => setOpenAddAdmin(true)}
         className="h-12 rounded-xl text-lg"
       >
-        <PlusIcon color="white" weight="bold" /> Add session
+        <PlusIcon color="white" weight="bold" /> {t("ADD_SESSION")}
       </Button>
     </div>
   );

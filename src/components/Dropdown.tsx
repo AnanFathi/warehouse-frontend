@@ -142,7 +142,7 @@ export default function Dropdown({
                 setSearchValue?.(e.target.value);
               }}
               onKeyDown={(e) => e.stopPropagation()}
-              placeholder={searchPlaceholder}
+              placeholder={t(searchPlaceholder)}
               className="w-full"
             />
           </div>

@@ -8,12 +8,12 @@ import {
   PencilSimpleLineIcon,
   TrashIcon,
 } from "@phosphor-icons/react/dist/ssr";
-import AddSessionDialog from "./AddSessionDialog";
 import EditProjectDialog from "./EditProjectDialog";
 import MoveSessionDialog from "./MoveSessionDialog";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
 import { DialogSettings } from "@/model/shared.models";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const testUsers: User[] = [
   {
@@ -228,55 +228,57 @@ const testUsers: User[] = [
   },
 ];
 
-const columns: Column[] = [
-  {
-    header: () => "Project name",
-    value: (user: User) => user.projectName,
-  },
-  {
-    header: () => "Session Type",
-    value: (user: User) => user.sessionType,
-  },
-  {
-    header: () => "Sessions",
-    value: (user: User) => (
-      <Link href="#" className="text-primary underline underline-offset-4">
-        {user.sessionNumber || 0}
-      </Link>
-    ),
-    sortKey: "username",
-  },
-  {
-    header: () => "Date",
-    value: (user: User) => user.date,
-  },
-];
-
-const settings: DialogSettings[] = [
-  {
-    label: "Add session",
-    icon: <ClipboardTextIcon className="fill-neutral-600" size={18} />,
-    dialog: AddSessionDialog,
-  },
-  {
-    label: "Move session",
-    icon: <ArrowBendUpLeftIcon className="fill-neutral-600" size={18} />,
-    dialog: MoveSessionDialog,
-  },
-  {
-    label: "Edit",
-    icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
-    dialog: EditProjectDialog,
-  },
-  {
-    label: "Delete",
-    icon: <TrashIcon className="fill-red-600" size={18} />,
-    dialog: ConfirmationDialog,
-    onAction: (user: User) => console.log("DELETE: ", user?.username),
-  },
-];
-
 const Table = () => {
+  const { t } = useTranslation();
+
+  const columns: Column[] = [
+    {
+      header: () => t("PROJECT_NAME"),
+      value: (user: User) => user.projectName,
+    },
+    {
+      header: () => t("SESSION_TYPE"),
+      value: (user: User) => user.sessionType,
+    },
+    {
+      header: () => t("SESSIONS"),
+      value: (user: User) => (
+        <Link href="#" className="text-primary underline underline-offset-4">
+          {user.sessionNumber || 0}
+        </Link>
+      ),
+      sortKey: "username",
+    },
+    {
+      header: () => t("DATE"),
+      value: (user: User) => user.date,
+    },
+  ];
+
+  const settings: DialogSettings[] = [
+    {
+      label: t("ADD_SESSION"),
+      icon: <ClipboardTextIcon className="fill-neutral-600" size={18} />,
+      href: "#"
+    },
+    {
+      label: t("MOVE_SESSION"),
+      icon: <ArrowBendUpLeftIcon className="fill-neutral-600" size={18} />,
+      dialog: MoveSessionDialog,
+    },
+    {
+      label: t("EDIT"),
+      icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
+      dialog: EditProjectDialog,
+    },
+    {
+      label: t("DELETE"),
+      icon: <TrashIcon className="fill-red-600" size={18} />,
+      dialog: ConfirmationDialog,
+      onAction: (user: User) => console.log("DELETE: ", user?.username),
+    },
+  ];
+
   return (
     <DataTable
       items={testUsers}

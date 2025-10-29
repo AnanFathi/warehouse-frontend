@@ -12,12 +12,14 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
 import { CalendarDotsIcon } from "@phosphor-icons/react/dist/ssr";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   mode?: "single" | "range";
   date: Date | DateRange;
   setDate: ((value: Date) => void) | ((value: DateRange) => void);
   className?: string;
+  placeholder?: string;
 }
 
 export function DatePicker({
@@ -25,7 +27,9 @@ export function DatePicker({
   date,
   setDate,
   className,
+  placeholder = "PICK_A_DATE",
 }: Props) {
+  const { t } = useTranslation();
   const isRange = mode === "range";
 
   const displayText = () => {
@@ -37,7 +41,7 @@ export function DatePicker({
     } else if (!isRange && date instanceof Date) {
       return format(date, "PPP");
     }
-    return "Pick a date";
+    return placeholder;
   };
 
   return (
@@ -51,7 +55,7 @@ export function DatePicker({
             className
           )}
         >
-          <p className="truncate">{displayText()}</p>
+          <p className="truncate">{t(displayText())}</p>
           <CalendarDotsIcon className="fill-primary me-2 h-4 w-4" />
         </Button>
       </PopoverTrigger>

@@ -21,21 +21,21 @@ const EditBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-xl">Edit beneficiary</DialogTitle>
+          <DialogTitle className="text-xl">{t("EDIT_BENEFICIARY")}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
           <TextInput
-            label={t("Username / case management number")}
-            placeholder={t("Enter Username / case management number")}
+            label={`${t("USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`}
+            placeholder={`${t("ENTER_USERNAME")} / ${t("CASE_MANAGEMENT_NUMBER")}`}
             value={""}
             setValue={() => {}}
             className="w-full"
           />
 
           <TextInput
-            label={t("Beneficiary Name")}
-            placeholder={t("Enter Beneficiary Name")}
+            label={t("BENEFICIARY_NAME")}
+            placeholder={t("ENTER_BENEFICIARY_NAME")}
             value={""}
             setValue={() => {}}
             className="w-full"
@@ -44,10 +44,10 @@ const EditBeneficiaryDialog = ({ open, setOpen, item }: DialogProps<User>) => {
 
         <DialogFooter className="flex flex-row justify-end gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("CANCEL")}</Button>
           </DialogClose>
 
-          <Button type="submit">Edit</Button>
+          <Button type="submit">{t("EDIT")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

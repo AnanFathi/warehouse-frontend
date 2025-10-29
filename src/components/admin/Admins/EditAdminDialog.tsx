@@ -30,7 +30,7 @@ const EditAdminDialog = ({ open, setOpen, item }: DialogProps<User>) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-xl">Edit admin</DialogTitle>
+          <DialogTitle className="text-xl">{t("EDIT_ADMIN")}</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
@@ -64,10 +64,10 @@ const EditAdminDialog = ({ open, setOpen, item }: DialogProps<User>) => {
 
         <DialogFooter className="flex flex-row justify-end gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("CANCEL")}</Button>
           </DialogClose>
 
-          <Button type="submit">Add</Button>
+          <Button type="submit">{t("ADD")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

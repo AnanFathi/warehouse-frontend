@@ -4,8 +4,11 @@ import { UploadSimpleIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import { useCallback, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { Button } from "./ui/button";
+import { styleSplitText } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 export default function FileUploadDropzone() {
+  const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -31,7 +34,7 @@ export default function FileUploadDropzone() {
       console.warn(`❌ File "${file.name}" rejected:`);
       errors.forEach((e: any) => console.warn("  -", e.message));
     });
-    alert("File rejected. Please upload a valid CSV or Excel file under 5 MB.");
+    alert(t("DRAG_REJECT"));
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -69,21 +72,18 @@ export default function FileUploadDropzone() {
         {isUploading ? (
           <div className="flex flex-col items-center gap-2">
             <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-primary border-solid" />
-            <p className="text-gray-500 text-xs">Uploading...</p>
+            <p className="text-gray-500 text-xs">{t("DRAG_UPLOADING")}</p>
           </div>
         ) : isDragActive ? (
           <div className="flex flex-col items-center gap-2">
             <UploadSimpleIcon className="text-primary" weight="bold" />
-            <p className="text-xs">Drop your file here...</p>
+            <p className="text-xs">{t("DRAG_ACTIVE")}</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2">
             <UploadSimpleIcon className="text-primary" weight="bold" />
             <p className="text-xs">
-              Drag & drop your CSV or Excel file here, or{" "}
-              <span className="text-primary font-semibold">
-                click to browse
-              </span>
+              {styleSplitText(t("DRAG_IDLE"), ["text-primary font-semibold"])}
             </p>
           </div>
         )}
@@ -95,7 +95,7 @@ export default function FileUploadDropzone() {
 
           <div className="flex items-center gap-2">
             <Button onClick={handleUpload} disabled={isUploading}>
-              {isUploading ? "Uploading..." : "Upload"}
+              {isUploading ? t("DRAG_UPLOADING") : t("UPLOAD")}
             </Button>
 
             <button

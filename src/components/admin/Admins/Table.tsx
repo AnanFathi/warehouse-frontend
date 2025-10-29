@@ -10,6 +10,7 @@ import {
 import EditAdminDialog from "./EditAdminDialog";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
 import { DialogSettings } from "@/model/shared.models";
+import { useTranslation } from "react-i18next";
 
 const testUsers: User[] = [
   {
@@ -159,51 +160,53 @@ const testUsers: User[] = [
   },
 ];
 
-const columns: Column[] = [
-  {
-    header: () =>  "Username",
-    value: (user: User) => user.username,
-    sortKey: "username",
-  },
-  {
-    header: () =>  "Role",
-    value: (user: User) => (
-      <Badge className={user.role === "ADMIN" && "text-primary bg-secondary"}>
-        {user.role}
-      </Badge>
-    ),
-  },
-  {
-    header: () =>  "Status",
-    value: (user: User) => (
-      <Badge
-        className={
-          user.status === "ACTIVE"
-            ? "text-success bg-success-foreground"
-            : "text-danger bg-danger-foreground"
-        }
-      >
-        {user.status}
-      </Badge>
-    ),
-  },
-];
-
-const settings: DialogSettings[] = [
-  {
-    label: "Edit",
-    icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
-    dialog: EditAdminDialog,
-  },
-  {
-    label: "Delete",
-    icon: <TrashIcon className="fill-red-600" size={18} />,
-    dialog: ConfirmationDialog,
-    onAction: (user: User) => console.log("DELETE: ", user?.username)
-  },
-];
-
 const Table = () => {
+  const { t } = useTranslation();
+
+  const columns: Column[] = [
+    {
+      header: () => t("USERNAME"),
+      value: (user: User) => user.username,
+      sortKey: "username",
+    },
+    {
+      header: () => t("ROLE"),
+      value: (user: User) => (
+        <Badge className={user.role === "ADMIN" && "text-primary bg-secondary"}>
+          {user.role}
+        </Badge>
+      ),
+    },
+    {
+      header: () => t("STATUS"),
+      value: (user: User) => (
+        <Badge
+          className={
+            user.status === "ACTIVE"
+              ? "text-success bg-success-foreground"
+              : "text-danger bg-danger-foreground"
+          }
+        >
+          {user.status}
+        </Badge>
+      ),
+    },
+  ];
+
+  const settings: DialogSettings[] = [
+    {
+      label: t("EDIT"),
+      icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
+      dialog: EditAdminDialog,
+    },
+    {
+      label: t("DELETE"),
+      icon: <TrashIcon className="fill-red-600" size={18} />,
+      dialog: ConfirmationDialog,
+      onAction: (user: User) => console.log("DELETE: ", user?.username),
+    },
+  ];
+
   return (
     <DataTable
       items={testUsers}
