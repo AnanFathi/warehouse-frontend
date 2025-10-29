@@ -4,6 +4,12 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Fragment } from "react";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -23,11 +29,14 @@ import {
   ClipboardTextIcon,
   FolderUserIcon,
   GearIcon,
+  SignOutIcon,
   SquaresFourIcon,
   UsersThreeIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { logout } from "@/actions/auth/logout.action";
+import { useTopLoader } from "nextjs-toploader";
 
 const items = [
   {
@@ -78,8 +87,14 @@ function SideBarButton({ dir }: { dir: "ltr" | "rtl" }) {
 
 export function AdminSidebar() {
   const { t, i18n } = useTranslation();
+  const { start: startTopLoader } = useTopLoader();
   const isMobile = useIsMobile();
   const pathname = "/" + usePathname().split("/")[1];
+
+  const handleLogout = () => {
+    startTopLoader();
+    logout();
+  };
 
   return (
     <div className="relative bg-transparent">
@@ -138,18 +153,31 @@ export function AdminSidebar() {
         </SidebarContent>
 
         <SidebarFooter>
-          <SidebarMenuButton
-            asChild
-            tooltip={t("SETTINGS")}
-            className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
-              pathname === "/settings" && "bg-secondary/30"
-            }`}
-          >
-            <a href="/settings">
-              <GearIcon className="!w-8 !h-8 fill-white" />
-              <span className="text-xl text-white">{t("SETTINGS")}</span>
-            </a>
-          </SidebarMenuButton>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton
+                tooltip={t("SETTINGS")}
+                className={`py-6 group-data-[collapsible=icon]:p-2 hover:bg-white/10 ${
+                  pathname === "/settings" && "bg-secondary/30"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <GearIcon className="!w-8 !h-8 fill-white" />
+                  <span className="text-xl text-white">{t("SETTINGS")}</span>
+                </div>
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                className="p-1 w-full flex gap-1 items-center"
+                onClick={handleLogout}
+              >
+                <SignOutIcon />
+                <p>{t("SIGN_OUT")}</p>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </SidebarFooter>
       </Sidebar>
     </div>
