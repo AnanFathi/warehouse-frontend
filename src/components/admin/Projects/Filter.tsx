@@ -2,13 +2,13 @@
 
 import TextInput from "@/components/TextInput";
 import Dropdown from "@/components/Dropdown";
+import AddProjectDialog from "./AddProjectDialog";
 import { Button } from "@/components/ui/button";
 import { useResponsiveSize } from "@/hooks/useResponsiveSize";
 import { getTailwindColor } from "@/lib/utils";
 import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import AddSessionDialog from "./AddSessionDialog";
 
 const Filter = () => {
   const { t } = useTranslation();
@@ -75,7 +75,7 @@ const Filter = () => {
         </Button>
       </div>
 
-      <AddSessionDialog open={openAddAdmin} setOpen={setOpenAddAdmin} />
+      <AddProjectDialog open={openAddAdmin} setOpen={setOpenAddAdmin} />
     </>
   );
 };
