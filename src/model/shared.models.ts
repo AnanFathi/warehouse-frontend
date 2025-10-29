@@ -1,23 +1,25 @@
 export type NameId = { name?: string; id?: string };
 
 export type ServerResponse<T> = {
-  data: T;
-  message: string | string[];
+  data?: T;
+  message?: string;
   error?: ErrorResponse;
 };
 
 export type ErrorResponse = {
-  message: string | string[];
-  error: string;
-  statusCode: number;
+  general: string[];
+} & {
+  [key: string]: string[];
 };
 
 export interface IPaginated<T> {
   data: T[];
-  itemsPerPage: number;
+  limit: number;
   totalItems: number;
-  currentPage: number;
+  page: number;
   totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
 }
 
 export type PaginatedResponse<T> = ServerResponse<IPaginated<T>>;

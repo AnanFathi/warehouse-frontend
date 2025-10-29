@@ -290,10 +290,12 @@ const Table = () => {
       dataPagination={{
         data: {
           data: testUsers,
-          itemsPerPage: 10,
+          limit: 10,
           totalItems: 100,
-          currentPage: 1,
+          page: 1,
           totalPages: 10,
+          hasPreviousPage: false,
+          hasNextPage: false,
         },
         message: "",
       }}

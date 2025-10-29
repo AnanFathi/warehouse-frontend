@@ -1,8 +1,7 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-// import { DropdownItemsPerPage } from "./DropdownItemsPerPage";
 import { useTranslation } from "react-i18next";
 import { PaginatedResponse } from "@/model/shared.models";
 import {
@@ -58,10 +57,10 @@ const Pagination = ({
 
   const totalItems = dataPagination?.data?.totalItems;
   const startItem =
-    (currentPage - 1) * dataPagination?.data?.itemsPerPage +
+    (currentPage - 1) * dataPagination?.data?.limit +
     (totalItems > 0 && 1);
   const endItem = Math.min(
-    currentPage * dataPagination?.data?.itemsPerPage,
+    currentPage * dataPagination?.data?.limit,
     totalItems
   );
 

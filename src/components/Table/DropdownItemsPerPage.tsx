@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -22,7 +22,6 @@ export function DropdownItemsPerPage({
   setCurrentItemsPerPage,
 }: Props) {
   const { t } = useTranslation();
-
   const [open, setOpen] = useState(false);
 
   const itemsPerPageList: Record<string, number> = {

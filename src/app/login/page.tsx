@@ -4,7 +4,7 @@ import DataReportSVG from "../../../public/svgs/DataReportSVG";
 import getTranslation from "../../../i18n";
 import { DropdownLanguage } from "@/components/DropdownLanguage";
 
-export default async function SignIn() {
+export default async function Login() {
   const { t } = await getTranslation();
 
   return (
