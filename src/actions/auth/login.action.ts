@@ -1,21 +1,26 @@
 "use server";
 
 import { apiClient } from "@/lib/apiClient";
-import { STATUS_CODES } from "@/lib/staticKeys";
 import { saveTokens } from "@/lib/tokenUtils";
-import { LoginPayload, Me, ServerResponse } from "@/models/shared.models";
+import { ServerResponse } from "@/model/shared.models";
+import { Auth } from "@/model/user.model";
+
+export type LoginPayload = {
+  username: string;
+  password: string;
+};
 
 export const login = async ({
-  email,
+  username,
   password,
-}: LoginPayload): Promise<ServerResponse<Me>> => {
-  const res = await apiClient<ServerResponse<Me>>("users/login", {
+}: LoginPayload): Promise<ServerResponse<Auth>> => {
+  const res = await apiClient<ServerResponse<Auth>>("auth/login", {
     method: "POST",
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ username, password }),
     skipAuth: true,
   });
 
-  if (res?.statusCode === STATUS_CODES.success && res?.data) {
+  if (res?.data) {
     const { refreshToken, accessToken } = res?.data;
     if (refreshToken && accessToken) {
       await Promise.all([saveTokens(accessToken, refreshToken)]);

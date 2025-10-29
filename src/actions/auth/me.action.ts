@@ -1,18 +1,11 @@
 "use server";
 
 import { apiClient } from "@/lib/apiClient";
-import { Me, ServerResponse } from "@/models/shared.models";
+import { ServerResponse } from "@/model/shared.models";
+import { User } from "@/model/user.models";
 
-export const me = async ({
-  refreshTokens = true,
-  redirectToLogin = true,
-}: {
-  refreshTokens?: boolean;
-  redirectToLogin?: boolean;
-}): Promise<ServerResponse<Me>> => {
-  return apiClient<ServerResponse<Me>>("users/me", {
+export const me = async (): Promise<ServerResponse<User>> => {
+  return apiClient<ServerResponse<User>>("users/me", {
     method: "GET",
-    refreshTokens,
-    redirectToLogin,
   });
 };

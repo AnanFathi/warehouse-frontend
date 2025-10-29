@@ -6,5 +6,5 @@ import { clearTokens } from "@/lib/tokenUtils";
 
 export async function logout(): Promise<void> {
   await clearTokens();
-  redirect(ROUTES.login);
+  redirect(ROUTES.login?.url);
 }

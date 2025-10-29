@@ -1,5 +1,5 @@
-import Form from "@/components/signin/Form";
-import DotPattern from "../../components/signin/DotPattern";
+import Form from "@/components/login/Form";
+import DotPattern from "../../components/login/DotPattern";
 import DataReportSVG from "../../../public/svgs/DataReportSVG";
 import getTranslation from "../../../i18n";
 import { DropdownLanguage } from "@/components/DropdownLanguage";

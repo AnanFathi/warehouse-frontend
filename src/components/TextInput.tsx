@@ -72,6 +72,7 @@ const TextInput = ({
           <button
             className="absolute end-4 top-1/2 -translate-y-1/2"
             onClick={() => setIsPasswordShown(!isPasswordShown)}
+            type="button"
           >
             {isPasswordShown ? (
               <EyeIcon size={25} color={getTailwindColor("primary")} />

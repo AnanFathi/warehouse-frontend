@@ -1,7 +1,7 @@
 import Link from "next/link";
 import getTranslation from "../../../i18n";
 import DesignStatsSVG from "../../../public/svgs/DesignStatsSVG";
-import DotPattern from "../../components/signin/DotPattern";
+import DotPattern from "../../components/login/DotPattern";
 import { DropdownLanguage } from "@/components/DropdownLanguage";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";

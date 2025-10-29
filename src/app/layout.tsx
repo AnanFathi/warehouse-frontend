@@ -5,6 +5,7 @@ import getTranslation from "../../i18n";
 import TranslationsProvider from "@/components/providers/TranslationsProvider";
 import NextTopLoader from "nextjs-toploader";
 import { getTailwindColor } from "@/lib/utils";
+import { ToastContainer } from "react-toastify";
 
 const quicksand = localFont({
   src: "../../public/fonts/Quicksand-VariableFont_wght.ttf",
@@ -34,6 +35,7 @@ export default async function RootLayout({
         >
           <NextTopLoader showSpinner color={getTailwindColor("primary")} />
           {children}
+          <ToastContainer position="bottom-center" autoClose={2000} />
         </TranslationsProvider>
       </body>
     </html>
