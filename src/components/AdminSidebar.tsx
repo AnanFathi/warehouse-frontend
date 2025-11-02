@@ -37,31 +37,32 @@ import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { logout } from "@/actions/auth/logout.action";
 import { useTopLoader } from "nextjs-toploader";
+import { ROUTES } from "@/lib/staticKeys";
 
 const items = [
   {
-    title: "DASHBOARD",
-    url: "/dashboard",
+    title: ROUTES.root.displayName,
+    url: ROUTES.root.url,
     icon: SquaresFourIcon,
   },
   {
-    title: "BENEFICIARIES",
-    url: "/beneficiaries",
+    title: ROUTES.beneficiaries.displayName,
+    url: ROUTES.beneficiaries.url,
     icon: FolderUserIcon,
   },
   {
-    title: "ADMINS",
-    url: "/admins",
+    title: ROUTES.admins.displayName,
+    url: ROUTES.admins.url,
     icon: UsersThreeIcon,
   },
   {
-    title: "SESSIONS",
-    url: "/sessions",
+    title: ROUTES.sessions.displayName,
+    url: ROUTES.sessions.url,
     icon: ClipboardTextIcon,
   },
   {
-    title: "PROJECTS",
-    url: "/projects",
+    title: ROUTES.projects.displayName,
+    url: ROUTES.projects.url,
     icon: BrowsersIcon,
   },
 ];

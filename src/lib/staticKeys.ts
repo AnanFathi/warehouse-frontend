@@ -4,10 +4,11 @@ export const COOKIES_KEYS = {
   locale: "NEXT_LOCALE",
 };
 
-export const ROUTES: Record<string, { url: string; displayName: string }> = {
-  root: { url: "/", displayName: "" },
+export type RoutesType = Record<string, { url: string; displayName: string }>;
+
+export const ROUTES = {
+  root: { url: "/", displayName: "DASHBOARD" },
   login: { url: "/login", displayName: "LOGIN" },
-  dashboard: { url: "/dashboard", displayName: "DASHBOARD" },
   admins: { url: "/admins", displayName: "ADMINS" },
   beneficiaries: { url: "/beneficiaries", displayName: "BENEFICIARIES" },
   sessions: { url: "/sessions", displayName: "SESSIONS" },

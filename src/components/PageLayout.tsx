@@ -11,7 +11,10 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const { t } = useTranslation();
   const pathname = usePathname();
   const route = pathname.split("/")[1];
-  const title = ROUTES[route]?.displayName;
+  const title =
+    route && route in ROUTES
+      ? ROUTES[route as keyof typeof ROUTES]?.displayName
+      : ROUTES.root?.displayName;
 
   return (
     <div className="w-full h-[calc(100vh+20rem)] sm:h-[calc(100vh-5rem)] px-4 md:px-10 xl:px-20 py-8 flex flex-col gap-6 transition-all">
