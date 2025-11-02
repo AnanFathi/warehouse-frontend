@@ -14,6 +14,7 @@ import ConfirmationDialog from "@/components/ConfirmationDialog";
 import { DialogSettings } from "@/model/shared.models";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { ROUTES } from "@/lib/staticKeys";
 
 const testUsers: User[] = [
   {
@@ -243,7 +244,10 @@ const Table = () => {
     {
       header: () => t("SESSIONS"),
       value: (user: User) => (
-        <Link href="#" className="text-primary underline underline-offset-4">
+        <Link
+          href={`${ROUTES.projects.url}/${user.id}${ROUTES.sessions.url}`}
+          className="text-primary underline underline-offset-4"
+        >
           {user.sessionNumber || 0}
         </Link>
       ),
@@ -259,7 +263,7 @@ const Table = () => {
     {
       label: t("ADD_SESSION"),
       icon: <ClipboardTextIcon className="fill-neutral-600" size={18} />,
-      href: "#"
+      href: "#",
     },
     {
       label: t("MOVE_SESSION"),
