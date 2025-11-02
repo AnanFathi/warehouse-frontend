@@ -32,7 +32,7 @@ const PageLayout = ({ title, children }: Props) => {
       </div>
 
       {/* Body */}
-      <div className="bg-white w-full h-[calc(100vh-16rem)] sm:min-h-[calc(100vh-14rem)] flex flex-col gap-4 shadow-md p-4 border rounded-2xl">
+      <div className="bg-white w-full sm:min-h-[calc(100vh-21.5rem)] flex flex-col gap-4 shadow-md p-4 border rounded-2xl">
         {children}
       </div>
     </div>

@@ -14,7 +14,7 @@ export default async function Layout({
     <SidebarProvider defaultOpen>
       <div className="flex w-full max-w-full">
         <AdminSidebar />
-        <main className="w-full min-w-0">
+        <main className="w-full min-w-0 h-screen overflow-y-auto">
           <Navbar role={t("SUPER_ADMIN")} />
           {children}
         </main>

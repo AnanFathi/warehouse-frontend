@@ -106,7 +106,7 @@ export function AdminSidebar() {
       )}
 
       <Sidebar
-        className="relative"
+        className="fixed"
         side={i18n.dir() === "ltr" ? "left" : "right"}
         collapsible="icon"
       >
