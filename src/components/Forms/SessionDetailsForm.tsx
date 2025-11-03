@@ -3,6 +3,7 @@
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import { combineLocalDateAndTime } from "@/lib/utils";
+import { Button } from "../ui/button";
 import FormikTextInput from "../FormikInputs/FormikTextInput";
 import FormikDropdown from "../FormikInputs/FormikDropdown";
 import FormikTimePicker from "../FormikInputs/FormikTimePicker";
@@ -37,30 +38,35 @@ const SessionDetailsForm = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="flex flex-col gap-8">
-      <FormikDropdown
-        items={sessionTypes}
-        formik={formik}
-        name="sessionType"
-        label={t("SESSION_TYPE")}
-        placeholder={t("ENTER_SESSION_TYPE")}
-      />
+    <form
+      onSubmit={formik.handleSubmit}
+      className="flex flex-col gap-x-4 gap-y-8"
+    >
+      <div className="grid grid-cols-2 gap-x-4 gap-y-8">
+        <FormikDropdown
+          items={sessionTypes}
+          formik={formik}
+          name="sessionType"
+          label={t("SESSION_TYPE")}
+          placeholder={t("ENTER_SESSION_TYPE")}
+        />
 
-      <FormikTextInput
-        formik={formik}
-        name="caseManagementNumber"
-        label={t("CASE_MANAGEMENT_NUMBER")}
-        placeholder={t("ENTER_CASE_MANAGEMENT_NUMBER")}
-      />
+        <FormikTextInput
+          formik={formik}
+          name="caseManagementNumber"
+          label={t("CASE_MANAGEMENT_NUMBER")}
+          placeholder={t("ENTER_CASE_MANAGEMENT_NUMBER")}
+        />
 
-      <FormikTimePicker
-        formik={formik}
-        name="time"
-        label={t("TIME")}
-        placeholder={t("ENTER_TIME")}
-      />
+        <FormikTimePicker
+          formik={formik}
+          name="time"
+          label={t("TIME")}
+          placeholder={t("ENTER_TIME")}
+        />
 
-      <FormikDatePicker formik={formik} name="date" label={t("DATE")} />
+        <FormikDatePicker formik={formik} name="date" label={t("DATE")} />
+      </div>
 
       <FormikTextArea
         formik={formik}
@@ -69,9 +75,11 @@ const SessionDetailsForm = () => {
         placeholder={t("ADD_NOTE")}
       />
 
-      <button type="submit" className="h-12 bg-primary text-white rounded-lg">
-        {t("SUBMIT")}
-      </button>
+      <div className="flex flex-row justify-end">
+        <Button type="submit" className="h-12 w-fit">
+          {t("NEXT")}
+        </Button>
+      </div>
     </form>
   );
 };
