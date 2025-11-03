@@ -1,4 +1,4 @@
-import Form from "@/components/login/Form";
+import LoginForm from "@/components/login/LoginForm";
 import DotPattern from "../../components/login/DotPattern";
 import DataReportSVG from "../../../public/svgs/DataReportSVG";
 import getTranslation from "../../../i18n";
@@ -20,7 +20,7 @@ export default async function Login() {
             </p>
           </div>
 
-          <Form />
+          <LoginForm />
         </div>
       </div>
 

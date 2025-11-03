@@ -1,4 +1,4 @@
-import FormLayout from "@/components/FormLayout";
+import FormLayout from "@/components/Forms/FormLayout";
 
 export default async function CreateSession() {
   return (

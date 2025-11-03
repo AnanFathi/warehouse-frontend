@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { useTranslation } from "react-i18next";
 
 type Props = {

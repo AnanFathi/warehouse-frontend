@@ -16,7 +16,7 @@ import { validationSchema } from "@/lib/validation";
 import TextInput from "@/components/TextInput";
 import useRequest from "@/hooks/useRequest";
 
-const Form = () => {
+const LoginForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const { start: startTopLoader } = useTopLoader();
@@ -41,59 +41,53 @@ const Form = () => {
     },
   });
 
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    isValid,
-  } = formik;
-
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+    <form onSubmit={formik.handleSubmit} className="flex flex-col gap-8">
       <TextInput
         label={t("USERNAME")}
         placeholder={t("ENTER_USERNAME")}
-        value={values.username}
-        onBlur={handleBlur}
-        onChange={handleChange}
+        value={formik.values.username}
+        onBlur={formik.handleBlur}
+        onChange={formik.handleChange}
         name="username"
         labelClassName="text-lg text-primary"
-        inputClassName={`h-14 focus:border-primary ${
-          touched.username && errors.username ? "border-red-500" : ""
-        }`}
+        inputClassName="h-14 focus:border-primary"
         fontSize={20}
         icon={
           <EnvelopeSimpleIcon size={25} color={getTailwindColor("primary")} />
         }
-        error={t(touched.username && errors.username ? errors.username : "")}
+        error={t(
+          formik.touched.username && formik.errors.username
+            ? formik.errors.username
+            : ""
+        )}
       />
 
       <TextInput
         label={t("PASSWORD")}
         placeholder={t("ENTER_PASSWORD")}
-        value={values.password}
-        onBlur={handleBlur}
-        onChange={handleChange}
+        value={formik.values.password}
+        onBlur={formik.handleBlur}
+        onChange={formik.handleChange}
         name="password"
         icon={<KeyIcon size={25} color={getTailwindColor("primary")} />}
         labelClassName="text-lg text-primary"
-        inputClassName={`h-14 focus:border-primary ${
-          touched.password && errors.password ? "border-red-500" : ""
-        }`}
+        inputClassName="h-14 focus:border-primary"
         fontSize={20}
         isPassword
-        error={t(touched.password && errors.password ? errors.password : "")}
+        error={t(
+          formik.touched.password && formik.errors.password
+            ? formik.errors.password
+            : ""
+        )}
       />
 
       <Button
-        disabled={!isValid || isLoading}
+        disabled={!formik.isValid || isLoading}
         className={`h-12 rounded-lg text-xl ${
-          isValid ? "text-white" : "text-primary"
+          formik.isValid ? "text-white" : "text-primary"
         }`}
-        variant={isValid ? "default" : "secondary"}
+        variant={formik.isValid ? "default" : "secondary"}
         type="submit"
       >
         {t("SIGNIN")}
@@ -102,4 +96,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default LoginForm;
