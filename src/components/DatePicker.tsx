@@ -56,7 +56,7 @@ export function DatePicker({
           )}
         >
           <p className="truncate">{t(displayText())}</p>
-          <CalendarDotsIcon className="fill-primary me-2 h-4 w-4" />
+          <CalendarDotsIcon className="fill-primary h-4 w-4" />
         </Button>
       </PopoverTrigger>
 
