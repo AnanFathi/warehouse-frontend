@@ -1,6 +1,5 @@
 export const COOKIES_KEYS = {
   accessToken: "accessToken",
-  refreshToken: "refreshToken",
   locale: "NEXT_LOCALE",
 };
 

@@ -12,21 +12,6 @@ export async function middleware(request: NextRequest) {
   let accessToken = request.cookies.get(COOKIES_KEYS.accessToken)?.value;
   let isAccessTokenValid = !isTokenExpired(accessToken);
 
-  // If access token is not valid but refresh token exists, attempt to refresh
-  if (!isAccessTokenValid) {
-    const refreshToken = request.cookies.get(COOKIES_KEYS.refreshToken)?.value;
-
-    if (refreshToken && !isTokenExpired(refreshToken)) {
-      const newTokens = await handleRefreshToken(refreshToken);
-      const res = NextResponse.next();
-      res.cookies.set(COOKIES_KEYS.accessToken, newTokens?.data?.accessToken);
-      res.cookies.set(COOKIES_KEYS.refreshToken, newTokens?.data?.refreshToken);
-      accessToken = newTokens?.data?.accessToken;
-      isAccessTokenValid = !isTokenExpired(accessToken);
-      return res;
-    }
-  }
-
   if (!isAccessTokenValid && url.pathname !== ROUTES.login?.url) {
     const loginUrl = new URL(ROUTES.login?.url, request.url);
     return NextResponse.redirect(loginUrl);
@@ -42,23 +27,4 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: ["/((?!api|static|.*\\..*|_next).*)", "/"],
-};
-
-const handleRefreshToken = async (refreshToken: string) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/users/refresh-token`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ refreshToken }),
-    }
-  );
-
-  if (!response.ok) {
-    return null;
-  }
-
-  return await response.json();
 };

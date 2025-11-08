@@ -1,17 +1,11 @@
 "use server";
 
 import { ROUTES } from "./staticKeys";
-import {
-  getAccessToken,
-  isTokenExpired,
-  refreshAccessToken,
-  clearTokens,
-} from "./tokenUtils";
+import { getAccessToken, isTokenExpired, clearTokens } from "./tokenUtils";
 import { redirect } from "next/navigation";
 
 interface FetchOptions extends RequestInit {
   skipAuth?: boolean;
-  refreshTokens?: boolean;
   redirectToLogin?: boolean;
 }
 
@@ -19,12 +13,7 @@ export async function apiClient<T>(
   endpoint: string,
   options: FetchOptions = {}
 ): Promise<T> {
-  const {
-    skipAuth = false,
-    refreshTokens = true,
-    redirectToLogin = true,
-    ...fetchOptions
-  } = options;
+  const { skipAuth = false, redirectToLogin = true, ...fetchOptions } = options;
 
   // Clone headers to avoid readonly issues
   const headers = new Headers(fetchOptions.headers);
@@ -32,21 +21,6 @@ export async function apiClient<T>(
   // If authentication is required, handle access token
   if (!skipAuth) {
     let accessToken = await getAccessToken();
-
-    // Check if token exists and if it's expired
-    if (accessToken && isTokenExpired(accessToken) && refreshTokens) {
-      // Try to refresh the token
-      const refreshed = await refreshAccessToken();
-
-      if (!refreshed) {
-        // If refresh failed, clear tokens and redirect to login
-        await clearTokens();
-        if (redirectToLogin) redirect(ROUTES.login?.url);
-      }
-
-      // Get the new token after refresh
-      accessToken = await getAccessToken();
-    }
 
     // If we have a valid token, add it to the headers
     if (accessToken) {
@@ -85,35 +59,7 @@ export async function apiClient<T>(
       finalOptions
     );
 
-    // If unauthorized and we didn't skip auth, attempt to refresh and retry
-    if (response.status === 401 && !skipAuth && refreshTokens) {
-      const refreshed = await refreshAccessToken();
-
-      if (refreshed) {
-        // If refresh succeeded, get the new token and retry the request
-        const newAccessToken = await getAccessToken();
-        if (newAccessToken) {
-          headers.set("Authorization", `Bearer ${newAccessToken}`);
-
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}${endpoint}`,
-            {
-              ...finalOptions,
-              headers,
-            }
-          );
-
-          const json = await response.json();
-
-          if (!json) {
-            return {} as T;
-          }
-
-          return json;
-        }
-      }
-
-      // If refresh failed or no new token, clear tokens and redirect
+    if (response.status === 401 && !skipAuth) {
       await clearTokens();
       if (redirectToLogin) redirect(ROUTES.login?.url);
     }

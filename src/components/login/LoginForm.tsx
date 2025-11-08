@@ -1,18 +1,16 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { getTailwindColor, handleErrorToast } from "@/lib/utils";
+import { getTailwindColor } from "@/lib/utils";
 import { EnvelopeSimpleIcon, KeyIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { login, LoginPayload } from "@/actions/auth/login.action";
-import { ServerResponse } from "@/models/shared.model";
 import { Auth } from "@/models/user.model";
 import { useRouter } from "next/navigation";
 import { useTopLoader } from "nextjs-toploader";
 import { ROUTES } from "@/lib/staticKeys";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { validationSchema } from "@/lib/validation";
 import TextInput from "@/components/TextInput";
 import useRequest from "@/hooks/useRequest";
 
@@ -21,35 +19,34 @@ const LoginForm = () => {
   const { t } = useTranslation();
   const { start: startTopLoader } = useTopLoader();
 
-  const { request: requestLogin, isLoading } = useRequest<
-    LoginPayload,
-    ServerResponse<Auth>
-  >(login);
+  const { request: requestLogin, isLoading } = useRequest<LoginPayload, Auth>(
+    login
+  );
 
   const formik = useFormik({
-    initialValues: { username: "", password: "" },
-    validationSchema: validationSchema.login,
+    initialValues: { email: "", password: "" },
     onSubmit: async (values) => {
       const res = await requestLogin(values);
-      if (res?.data) {
-        toast.success(res?.message);
+      if (res?.accessToken) {
+        toast.success("Login Succeed");
         startTopLoader();
         setTimeout(() => router.push(ROUTES.root.url), 200);
-      } else {
-        handleErrorToast(res?.error);
       }
+      // else {
+      //   handleErrorToast(res?.error);
+      // }
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit} className="flex flex-col gap-8">
       <TextInput
-        label={t("USERNAME")}
-        placeholder={t("ENTER_USERNAME")}
-        value={formik.values.username}
+        label={t("EMAIL")}
+        placeholder={t("ENTER_EMAIL")}
+        value={formik.values.email}
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
-        name="username"
+        name="email"
         labelClassName="text-lg text-primary"
         inputClassName="h-14 focus:border-primary"
         fontSize={20}
@@ -57,9 +54,7 @@ const LoginForm = () => {
           <EnvelopeSimpleIcon size={25} color={getTailwindColor("primary")} />
         }
         error={t(
-          formik.touched.username && formik.errors.username
-            ? formik.errors.username
-            : ""
+          formik.touched.email && formik.errors.email ? formik.errors.email : ""
         )}
       />
 
@@ -83,7 +78,7 @@ const LoginForm = () => {
       />
 
       <Button
-        disabled={!formik.isValid || isLoading}
+        disabled={isLoading}
         className={`h-12 rounded-lg text-xl ${
           formik.isValid ? "text-white" : "text-primary"
         }`}

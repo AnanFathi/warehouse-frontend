@@ -2,29 +2,25 @@
 
 import { apiClient } from "@/lib/apiClient";
 import { saveTokens } from "@/lib/tokenUtils";
-import { ServerResponse } from "@/models/shared.model";
 import { Auth } from "@/models/user.model";
 
 export type LoginPayload = {
-  username: string;
+  email: string;
   password: string;
 };
 
 export const login = async ({
-  username,
+  email,
   password,
-}: LoginPayload): Promise<ServerResponse<Auth>> => {
-  const res = await apiClient<ServerResponse<Auth>>("auth/login", {
+}: LoginPayload): Promise<Auth> => {
+  const res = await apiClient<Auth>("auth/login", {
     method: "POST",
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ email, password }),
     skipAuth: true,
   });
 
-  if (res?.data) {
-    const { refreshToken, accessToken } = res?.data;
-    if (refreshToken && accessToken) {
-      await Promise.all([saveTokens(accessToken, refreshToken)]);
-    }
+  if (res?.accessToken) {
+    await Promise.all([saveTokens(res.accessToken)]);
   }
 
   return res;

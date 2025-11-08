@@ -2,7 +2,7 @@ import { PaginatedPayload } from "./shared.model";
 
 export type Auth = {
   accessToken: string;
-  refreshToken: string;
+  user: User;
 };
 
 export type UserRole = "ADMIN" | "STAFF";
