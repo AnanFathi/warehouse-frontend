@@ -1,0 +1,87 @@
+"use client";
+
+import DataTable, { Column } from "@/components/Table/DataTable";
+import {
+  PencilSimpleLineIcon,
+  TrashIcon,
+} from "@phosphor-icons/react/dist/ssr";
+import EditUserDialog from "./EditUserDialog";
+import ConfirmationDialog from "@/components/ConfirmationDialog";
+import { DialogSettings, Paginated } from "@/models/shared.model";
+import { useTranslation } from "react-i18next";
+
+import { formatDate } from "@/lib/utils";
+import { deleteUser } from "@/actions/users/deleteUser";
+import { CategoriesPayload, Category } from "@/models/category.model";
+
+type Props = {
+  data: Paginated<Category>;
+  setPage: (val: number) => void;
+  page: number;
+  setItemsPerPage: (val: number) => void;
+  itemsPerPage: number;
+  name: string;
+  fetch: (payload: CategoriesPayload) => Promise<Paginated<Category>>;
+};
+
+const Table = ({
+  data,
+  name,
+  page = 1,
+  setPage,
+  itemsPerPage = 10,
+  setItemsPerPage,
+  fetch,
+}: Props) => {
+  const { t } = useTranslation();
+
+  const columns: Column[] = [
+    {
+      header: () => t("EMAIL"),
+      value: (category: Category) => category.name,
+    },
+    {
+      header: () => t("CREATED_AT"),
+      value: (category: Category) => formatDate(category?.createdAt),
+    },
+  ];
+
+  const settings: DialogSettings[] = [
+    {
+      label: t("EDIT"),
+      icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
+      dialog: EditUserDialog,
+      onAction: async () => {
+        fetch({ page, itemsPerPage, name });
+      },
+      closeOnAction: true,
+    },
+    {
+      label: t("DELETE"),
+      icon: <TrashIcon className="fill-red-600" size={18} />,
+      dialog: ConfirmationDialog,
+      onAction: async (category: Category) => {
+        await deleteUser(category._id);
+        fetch({ page, itemsPerPage, name });
+      },
+      closeOnAction: true,
+    },
+  ];
+
+  return (
+    <DataTable
+      items={data?.data}
+      columns={columns}
+      sortBy="username"
+      sortType="DESC"
+      itemsPerPage={itemsPerPage}
+      setItemsPerPage={setItemsPerPage}
+      page={page}
+      setPage={setPage}
+      dataPagination={data}
+      settings={settings}
+    />
+  );
+};
+
+export default Table;
