@@ -26,6 +26,7 @@ type Props = {
   role: string;
   search: string;
   fetch: (payload: UsersPayload) => Promise<Paginated<User>>;
+  me: User;
 };
 
 const Table = ({
@@ -37,6 +38,7 @@ const Table = ({
   itemsPerPage = 10,
   setItemsPerPage,
   fetch,
+  me
 }: Props) => {
   const { t } = useTranslation();
 
@@ -105,7 +107,7 @@ const Table = ({
       page={page}
       setPage={setPage}
       dataPagination={data}
-      settings={settings}
+      settings={me && me.role === "ADMIN" && settings}
     />
   );
 };

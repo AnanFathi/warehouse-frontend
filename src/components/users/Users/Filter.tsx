@@ -9,6 +9,7 @@ import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import EditUserDialog from "./EditUserDialog";
+import { User } from "@/models/user.model";
 
 type Props = {
   role: string;
@@ -16,9 +17,10 @@ type Props = {
   search: string;
   setSearch: (val: string) => void;
   onAddUser: () => void;
+  me: User;
 };
 
-const Filter = ({ role, setRole, search, setSearch, onAddUser }: Props) => {
+const Filter = ({ role, setRole, search, setSearch, onAddUser, me }: Props) => {
   const { t } = useTranslation();
   const [openAddAdmin, setOpenAddAdmin] = useState<boolean>(false);
 
@@ -75,19 +77,23 @@ const Filter = ({ role, setRole, search, setSearch, onAddUser }: Props) => {
           />
         </div>
 
-        <Button
-          onClick={() => setOpenAddAdmin(true)}
-          className="h-12 rounded-xl text-lg"
-        >
-          <PlusIcon color="white" weight="bold" /> {t("ADD_ADMIN")}
-        </Button>
+        {me && me.role === "ADMIN" && (
+          <Button
+            onClick={() => setOpenAddAdmin(true)}
+            className="h-12 rounded-xl text-lg"
+          >
+            <PlusIcon color="white" weight="bold" /> {t("ADD_ADMIN")}
+          </Button>
+        )}
       </div>
 
-      <EditUserDialog
-        open={openAddAdmin}
-        setOpen={setOpenAddAdmin}
-        onAction={onAddUser}
-      />
+      {me && me.role === "ADMIN" && (
+        <EditUserDialog
+          open={openAddAdmin}
+          setOpen={setOpenAddAdmin}
+          onAction={onAddUser}
+        />
+      )}
     </>
   );
 };

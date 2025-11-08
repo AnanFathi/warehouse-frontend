@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import useRequest from "@/hooks/useRequest";
 import { getUsers } from "@/actions/users/getUsers";
-
 import Filter from "@/components/users/Users/Filter";
 import Table from "@/components/users/Users/Table";
 import PageLayout from "@/components/PageLayout";
@@ -12,7 +11,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { User, UserRole, UsersPayload } from "@/models/user.model";
 import { Paginated } from "@/models/shared.model";
 
-const Layout = () => {
+const Layout = ({ me }: { me: User }) => {
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [role, setRole] = useState<string>();
@@ -48,6 +47,7 @@ const Layout = () => {
         onAddUser={() =>
           fetch({ page, itemsPerPage, role: role as UserRole, search })
         }
+        me={me}
       />
       <Table
         data={data}
@@ -58,6 +58,7 @@ const Layout = () => {
         setItemsPerPage={setItemsPerPage}
         role={role}
         search={debouncedSearch}
+        me={me}
       />
     </PageLayout>
   );
