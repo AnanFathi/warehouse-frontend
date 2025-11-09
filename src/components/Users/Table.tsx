@@ -38,7 +38,7 @@ const Table = ({
   itemsPerPage = 10,
   setItemsPerPage,
   fetch,
-  me
+  me,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -100,8 +100,6 @@ const Table = ({
     <DataTable
       items={data?.data}
       columns={columns}
-      sortBy="username"
-      sortType="DESC"
       itemsPerPage={itemsPerPage}
       setItemsPerPage={setItemsPerPage}
       page={page}

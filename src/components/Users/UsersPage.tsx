@@ -23,19 +23,24 @@ const UsersPage = ({ me }: { me: User }) => {
   );
 
   useEffect(() => {
-    fetch({ page, itemsPerPage, role: role as UserRole, search });
-  }, [page, itemsPerPage, role, search]);
+    fetch({
+      page,
+      itemsPerPage,
+      role: role as UserRole,
+      search: debouncedSearch,
+    });
+  }, [page, itemsPerPage, role, debouncedSearch]);
 
-  useEffect(() => {
-    console.log("🚀 ~ Table ~ data:", data);
-  }, [data]);
-
-  useDebounce(() => {
-    if (search !== debouncedSearch) {
-      setPage(1);
-    }
-    setDebouncedSearch(search);
-  }, 500);
+  useDebounce(
+    () => {
+      if (search !== debouncedSearch) {
+        setPage(1);
+      }
+      setDebouncedSearch(search);
+    },
+    500,
+    [search]
+  );
 
   return (
     <PageLayout title="USERS">

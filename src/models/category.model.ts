@@ -11,3 +11,12 @@ export type Category = {
 export type CategoriesPayload = PaginatedPayload & {
   name?: string;
 };
+
+export type CreateCategoryPayload = {
+  name?: string;
+};
+
+export type EditCategoryPayload = {
+  _id: string;
+  name?: string;
+};

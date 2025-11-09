@@ -2,12 +2,11 @@
 
 import TextInput from "@/components/TextInput";
 import { Button } from "@/components/ui/button";
-import { useResponsiveSize } from "@/hooks/useResponsiveSize";
 import { getTailwindColor } from "@/lib/utils";
 import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import EditUserDialog from "./EditUserDialog";
+import EditCategoryDialog from "./EditCategoryDialog";
 
 type Props = {
   name: string;
@@ -19,49 +18,22 @@ const Filter = ({ name, setName, onAddUser }: Props) => {
   const { t } = useTranslation();
   const [openAddAdmin, setOpenAddAdmin] = useState<boolean>(false);
 
-  const {
-    containerRef,
-    outFlags: {
-      width: [breakpoint1, breakpoint2],
-    },
-  } = useResponsiveSize({
-    breakpoints: [725, 440],
-  });
-
-  const roles = [
-    { value: "ADMIN", label: "ADMIN" },
-    { value: "STAFF", label: "STAFF" },
-  ];
-
   return (
     <>
-      <div
-        ref={containerRef}
-        className={`flex gap-4 ${
-          breakpoint1 ? "flex-col" : "flex-row justify-between items-center"
-        } ${breakpoint2 ? "items-stretch" : "items-end"}`}
-      >
-        <div
-          className={`flex gap-4 w-full ${
-            breakpoint2 ? "flex-col" : "flex-row"
-          }`}
-        >
-          <TextInput
-            placeholder={t("NAME")}
-            value={name || ""}
-            setValue={setName}
-            icon={
-              <MagnifyingGlassIcon
-                size={25}
-                color={getTailwindColor("neutral-500")}
-              />
-            }
-            className={`rounded-xl ${
-              breakpoint2 ? "w-full" : breakpoint1 ? "w-2/3" : "w-96"
-            }`}
-            inputClassName="h-12"
-          />
-        </div>
+      <div className="flex flex-col md:flex-row gap-4">
+        <TextInput
+          placeholder={t("NAME")}
+          value={name || ""}
+          setValue={setName}
+          icon={
+            <MagnifyingGlassIcon
+              size={25}
+              color={getTailwindColor("neutral-500")}
+            />
+          }
+          className="rounded-xl w-full"
+          inputClassName="h-12"
+        />
 
         <Button
           onClick={() => setOpenAddAdmin(true)}
@@ -71,7 +43,7 @@ const Filter = ({ name, setName, onAddUser }: Props) => {
         </Button>
       </div>
 
-      <EditUserDialog
+      <EditCategoryDialog
         open={openAddAdmin}
         setOpen={setOpenAddAdmin}
         onAction={onAddUser}

@@ -26,10 +26,6 @@ const CategoriesPage = () => {
     fetch({ page, itemsPerPage, name });
   }, [page, itemsPerPage, name]);
 
-  useEffect(() => {
-    console.log("🚀 ~ Table ~ data:", data);
-  }, [data]);
-
   useDebounce(() => {
     if (name !== debouncedSearch) {
       setPage(1);

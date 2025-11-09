@@ -5,14 +5,14 @@ import {
   PencilSimpleLineIcon,
   TrashIcon,
 } from "@phosphor-icons/react/dist/ssr";
-import EditUserDialog from "./EditUserDialog";
+import EditCategoryDialog from "./EditCategoryDialog";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
 import { DialogSettings, Paginated } from "@/models/shared.model";
 import { useTranslation } from "react-i18next";
 
 import { formatDate } from "@/lib/utils";
-import { deleteUser } from "@/actions/users/deleteUser";
 import { CategoriesPayload, Category } from "@/models/category.model";
+import { deleteCategory } from "@/actions/categories/deleteCategory";
 
 type Props = {
   data: Paginated<Category>;
@@ -50,7 +50,7 @@ const Table = ({
     {
       label: t("EDIT"),
       icon: <PencilSimpleLineIcon className="fill-neutral-600" size={18} />,
-      dialog: EditUserDialog,
+      dialog: EditCategoryDialog,
       onAction: async () => {
         fetch({ page, itemsPerPage, name });
       },
@@ -61,7 +61,7 @@ const Table = ({
       icon: <TrashIcon className="fill-red-600" size={18} />,
       dialog: ConfirmationDialog,
       onAction: async (category: Category) => {
-        await deleteUser(category._id);
+        await deleteCategory(category._id);
         fetch({ page, itemsPerPage, name });
       },
       closeOnAction: true,
@@ -72,8 +72,6 @@ const Table = ({
     <DataTable
       items={data?.data}
       columns={columns}
-      sortBy="username"
-      sortType="DESC"
       itemsPerPage={itemsPerPage}
       setItemsPerPage={setItemsPerPage}
       page={page}
