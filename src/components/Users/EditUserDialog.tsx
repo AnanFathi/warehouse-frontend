@@ -18,6 +18,7 @@ import { Label } from "../ui/label";
 import { useState } from "react";
 import { createUser } from "@/actions/users/createUser";
 import { editUser } from "@/actions/users/editUser";
+import UploadPicture from "../UploadPicture";
 
 const EditUserDialog = ({
   open,
@@ -33,7 +34,7 @@ const EditUserDialog = ({
   const [email, setEmail] = useState(item?.email || "");
   const [password, setPassword] = useState(item?.password || "");
   const [role, setRole] = useState<UserRole>(item?.role || "STAFF");
-
+  const [picture, setPicture] = useState<File>();
   const [isLoading, setIsLoading] = useState(false);
 
   const roles = [
@@ -75,6 +76,15 @@ const EditUserDialog = ({
             {t(item ? "EDIT_USER" : "ADD_USER")}
           </DialogTitle>
         </DialogHeader>
+
+        <UploadPicture
+          id={item?._id}
+          imageURL={item?.imageURL}
+          picture={picture}
+          setPicture={setPicture}
+          type="user"
+          onUpload={() => onAction?.(item)}
+        />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
           <TextInput

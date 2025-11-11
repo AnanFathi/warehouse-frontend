@@ -6,6 +6,7 @@ import {
   KeyIcon,
   PencilSimpleLineIcon,
   TrashIcon,
+  UserIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import EditUserDialog from "./EditUserDialog";
 import ConfirmationDialog from "@/components/ConfirmationDialog";
@@ -15,6 +16,7 @@ import { formatDate } from "@/lib/utils";
 import { deleteUser } from "@/actions/users/deleteUser";
 import ChangeUserPasswordDialog from "./ChangeUserPasswordDialog";
 import { Badge } from "../ui/badge";
+import Avatar from "../Avatar";
 
 type Props = {
   data: Paginated<User>;
@@ -43,12 +45,17 @@ const Table = ({
 
   const columns: Column[] = [
     {
-      header: () => t("EMAIL"),
-      value: (user: User) => user.email,
+      header: () => t("NAME"),
+      value: (user: User) => (
+        <Avatar
+          label={`${user.firstName} ${user.lastName}`}
+          src={user?.imageURL}
+        />
+      ),
     },
     {
-      header: () => t("NAME"),
-      value: (user: User) => `${user.firstName} ${user.lastName}`,
+      header: () => t("EMAIL"),
+      value: (user: User) => user?.email,
     },
     {
       header: () => t("ROLE"),

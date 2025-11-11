@@ -5,24 +5,32 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { useTranslation } from "react-i18next";
-import { User } from "@/models/user.model";
 import { UploadFilePayload, UploadType } from "@/models/shared.model";
 import { uploadFile } from "@/actions/upload/uploadFile";
 
 type Props = {
-  me: User;
+  id: string;
+  imageURL: string;
   type: UploadType;
   picture: File;
   setPicture: (file: File) => void;
+  onUpload?: () => void;
 };
 
-const UploadPicture = ({ me, type, picture, setPicture }: Props) => {
+const UploadPicture = ({
+  id,
+  imageURL,
+  type,
+  picture,
+  setPicture,
+  onUpload,
+}: Props) => {
   const { t } = useTranslation();
 
   const { request: uploadPicture, isLoading: uploadLoading } = useRequest<
     UploadFilePayload,
     void
-  >(uploadFile);
+  >(uploadFile, { showSuccessToast: true });
 
   const handlePictureFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -33,15 +41,16 @@ const UploadPicture = ({ me, type, picture, setPicture }: Props) => {
 
   const handleUpload = async () => {
     if (!picture) return;
-    await uploadPicture({ file: picture, type, id: me?._id });
+    await uploadPicture({ file: picture, type, id });
+    onUpload?.();
   };
 
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="relative overflow-hidden bg-neutral-300 w-60 h-60 rounded-full flex justify-center items-center">
-        {picture || me?.imageURL ? (
+        {picture || imageURL ? (
           <Image
-            src={picture ? URL.createObjectURL(picture) : me?.imageURL}
+            src={picture ? URL.createObjectURL(picture) : imageURL}
             alt="Profile preview"
             fill
             className="object-contain"

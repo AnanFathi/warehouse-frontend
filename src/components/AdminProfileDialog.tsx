@@ -22,6 +22,7 @@ import { updateMe } from "@/actions/users/updateMe";
 import { changeMePassword } from "@/actions/users/changeMePassword";
 import UploadPicture from "./UploadPicture";
 import useRequest from "@/hooks/useRequest";
+import Image from "next/image";
 
 const AdminProfileDialog = ({ me }: { me: User }) => {
   const { t } = useTranslation();
@@ -59,12 +60,23 @@ const AdminProfileDialog = ({ me }: { me: User }) => {
           className="py-6 group-data-[collapsible=icon]:p-2 ltr:group-data-[collapsible=icon]:-translate-x-4 rtl:group-data-[collapsible=icon]:translate-x-4 hover:bg-white/10 active:bg-secondary/30"
         >
           <div className="flex items-center gap-2">
-            <div className="relative bg-secondary p-1.5 rounded-full">
-              <UserIcon className="fill-primary" size={25} />
+            <div className="relative bg-neutral-300 rounded-full w-10 h-10">
+              {me?.imageURL ? (
+                <div className="relative w-full h-full overflow-hidden rounded-full">
+                  <Image
+                    src={me?.imageURL}
+                    alt="Profile preview"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              ) : (
+                <UserIcon size={25} />
+              )}
 
               {me && me.role === "ADMIN" && (
                 <StarIcon
-                  className="absolute -top-0.5 -end-0.5 fill-yellow-500"
+                  className="absolute -top-0.5 -end-1 fill-yellow-500"
                   size={16}
                   weight="fill"
                 />
@@ -83,7 +95,8 @@ const AdminProfileDialog = ({ me }: { me: User }) => {
         </DialogHeader>
 
         <UploadPicture
-          me={me}
+          id={me?._id}
+          imageURL={me?.imageURL}
           picture={picture}
           setPicture={setPicture}
           type="user"
