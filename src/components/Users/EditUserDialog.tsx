@@ -70,21 +70,23 @@ const EditUserDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
+      <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] rounded-lg overflow-auto">
         <DialogHeader className="text-left">
           <DialogTitle className="text-xl">
             {t(item ? "EDIT_USER" : "ADD_USER")}
           </DialogTitle>
         </DialogHeader>
 
-        <UploadPicture
-          id={item?._id}
-          imageURL={item?.imageURL}
-          picture={picture}
-          setPicture={setPicture}
-          type="user"
-          onUpload={() => onAction?.(item)}
-        />
+        {item && (
+          <UploadPicture
+            id={item?._id}
+            imageURL={item?.imageURL}
+            picture={picture}
+            setPicture={setPicture}
+            type="user"
+            onUpload={() => onAction?.(item)}
+          />
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
           <TextInput

@@ -13,6 +13,7 @@ import { formatDate } from "@/lib/utils";
 import { Item, ItemsPayload } from "@/models/item.model";
 import { Badge } from "../ui/badge";
 import { deleteItem } from "@/actions/items/deleteItem";
+import Avatar from "../Avatar";
 
 type Props = {
   data: Paginated<Item>;
@@ -38,7 +39,9 @@ const Table = ({
   const columns: Column[] = [
     {
       header: () => t("ID"),
-      value: (item: Item) => item?._id,
+      value: (item: Item) => (
+        <Avatar label={item?._id} src={item?.imageURL} type="category" />
+      ),
     },
     {
       header: () => t("CATEGORY"),

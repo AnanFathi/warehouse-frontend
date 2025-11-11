@@ -50,6 +50,7 @@ const Table = ({
         <Avatar
           label={`${user.firstName} ${user.lastName}`}
           src={user?.imageURL}
+          type="user"
         />
       ),
     },

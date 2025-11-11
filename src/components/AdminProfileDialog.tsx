@@ -89,7 +89,7 @@ const AdminProfileDialog = ({ me }: { me: User }) => {
         </SidebarMenuButton>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
+      <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] rounded-lg overflow-auto">
         <DialogHeader className="text-left">
           <DialogTitle className="text-xl">{t("EDIT_PROFILE")}</DialogTitle>
         </DialogHeader>
@@ -140,18 +140,20 @@ const AdminProfileDialog = ({ me }: { me: User }) => {
           )}
         </div>
 
-        <DialogFooter className="flex flex-row justify-end gap-2">
+        <DialogFooter className="flex flex-col sm:flex-row justify-end gap-2">
           <ChangePasswordDialog me={me} />
 
-          <DialogClose disabled={isLoading} asChild>
-            <Button variant="secondary">{t("CANCEL")}</Button>
-          </DialogClose>
+          <div className="flex flex-row justify-end gap-2">
+            <DialogClose disabled={isLoading} asChild>
+              <Button variant="secondary">{t("CANCEL")}</Button>
+            </DialogClose>
 
-          <DialogClose disabled={isLoading} asChild>
-            <Button disabled={isLoading} onClick={handleSubmit} type="submit">
-              {t("SUBMIT")}
-            </Button>
-          </DialogClose>
+            <DialogClose disabled={isLoading} asChild>
+              <Button disabled={isLoading} onClick={handleSubmit} type="submit">
+                {t("SUBMIT")}
+              </Button>
+            </DialogClose>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

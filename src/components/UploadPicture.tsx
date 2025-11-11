@@ -1,6 +1,10 @@
 import Image from "next/image";
 import useRequest from "@/hooks/useRequest";
-import { CircleNotchIcon, UserIcon } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArmchairIcon,
+  CircleNotchIcon,
+  UserIcon,
+} from "@phosphor-icons/react/dist/ssr";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -55,8 +59,10 @@ const UploadPicture = ({
             fill
             className="object-contain"
           />
-        ) : (
+        ) : type === "user" ? (
           <UserIcon className="w-full h-full p-4 text-black" />
+        ) : (
+          <ArmchairIcon className="w-full h-full p-4 text-black" />
         )}
 
         {uploadLoading && (

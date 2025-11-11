@@ -21,6 +21,7 @@ import { getCategories } from "@/actions/categories/getCategories";
 import { editItem } from "@/actions/items/editItem";
 import { createItem } from "@/actions/items/createItem";
 import { Label } from "../ui/label";
+import UploadPicture from "../UploadPicture";
 
 const EditItemDialog = ({
   open,
@@ -36,7 +37,7 @@ const EditItemDialog = ({
   const [category, setCategory] = useState<string>(item?.category?._id || "");
   const [comment, setComment] = useState<string>(item?.comment || "");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [picture, setPicture] = useState<File>();
   const [categoriesPage, setCategoriesPage] = useState<number>(1);
   const [categories, setCategories] = useState<
     { value: string; label: string }[]
@@ -121,12 +122,23 @@ const EditItemDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] rounded-lg">
+      <DialogContent className="sm:max-w-[800px] w-[calc(100%-2rem)] max-h-[calc(100%-2rem)] rounded-lg overflow-auto">
         <DialogHeader className="text-left">
           <DialogTitle className="text-xl">
             {t(item ? "EDIT_ITEM" : "ADD_ITEM")}
           </DialogTitle>
         </DialogHeader>
+
+        {item && (
+          <UploadPicture
+            id={item?._id}
+            imageURL={item?.imageURL}
+            picture={picture}
+            setPicture={setPicture}
+            type="item"
+            onUpload={() => onAction?.(item)}
+          />
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextInput

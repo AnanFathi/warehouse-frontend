@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { formatDate } from "@/lib/utils";
 import { CategoriesPayload, Category } from "@/models/category.model";
 import { deleteCategory } from "@/actions/categories/deleteCategory";
+import Avatar from "../Avatar";
 
 type Props = {
   data: Paginated<Category>;
@@ -36,8 +37,14 @@ const Table = ({
 
   const columns: Column[] = [
     {
-      header: () => t("EMAIL"),
-      value: (category: Category) => category.name,
+      header: () => t("NAME"),
+      value: (category: Category) => (
+        <Avatar
+          label={category?.name}
+          src={category?.imageURL}
+          type="category"
+        />
+      ),
     },
     {
       header: () => t("CREATED_AT"),

@@ -16,6 +16,7 @@ import { useState } from "react";
 import { Category } from "@/models/category.model";
 import { editCategory } from "@/actions/categories/editCategory";
 import { createCategory } from "@/actions/categories/createCategory";
+import UploadPicture from "../UploadPicture";
 
 const EditCategoryDialog = ({
   open,
@@ -27,6 +28,7 @@ const EditCategoryDialog = ({
   const { t } = useTranslation();
 
   const [name, setName] = useState(item?.name || "");
+  const [picture, setPicture] = useState<File>();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -56,6 +58,17 @@ const EditCategoryDialog = ({
             {t(item ? "EDIT_CATEGORY" : "ADD_CATEGORY")}
           </DialogTitle>
         </DialogHeader>
+
+        {item && (
+          <UploadPicture
+            id={item?._id}
+            imageURL={item?.imageURL}
+            picture={picture}
+            setPicture={setPicture}
+            type="category"
+            onUpload={() => onAction?.(item)}
+          />
+        )}
 
         <TextInput
           label={t("NAME")}
