@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import useRequest from "@/hooks/useRequest";
 import Filter from "@/components/Items/Filter";
 import Table from "@/components/Items/Table";
@@ -12,9 +13,12 @@ import { getItems } from "@/actions/items/getItems";
 import { ItemsPayload, Item, ItemStatus } from "@/models/item.model";
 
 const ItemsPage = () => {
+  const searchParams = useSearchParams();
+  const queryId = searchParams.get("id");
+
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [id, setId] = useState<string>("");
+  const [id, setId] = useState<string>(queryId || "");
   const [debouncedId, setDebouncedId] = useState<string>(id);
   const [status, setStatus] = useState<ItemStatus>();
   const [name, setName] = useState<string>("");
@@ -79,6 +83,7 @@ const ItemsPage = () => {
         itemsPerPage={itemsPerPage}
         setItemsPerPage={setItemsPerPage}
         name={debouncedName}
+        id={debouncedId}
       />
     </PageLayout>
   );

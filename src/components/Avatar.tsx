@@ -5,14 +5,16 @@ import { UploadType } from "@/models/shared.model";
 import { ArmchairIcon, UserIcon } from "@phosphor-icons/react/dist/ssr";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   src: string;
   label: string;
   type: UploadType;
+  className?: string;
 };
 
-const Avatar = ({ src, label, type }: Props) => {
+const Avatar = ({ src, label, type, className }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -21,7 +23,10 @@ const Avatar = ({ src, label, type }: Props) => {
         <button
           disabled={!src}
           onClick={src ? () => setOpen(true) : null}
-          className="relative bg-neutral-300 w-10 h-10 overflow-hidden rounded-full flex justify-center items-center"
+          className={twMerge(
+            "relative bg-neutral-300 w-10 h-10 overflow-hidden rounded-full flex justify-center items-center",
+            className
+          )}
         >
           {src ? (
             <Image
@@ -31,9 +36,9 @@ const Avatar = ({ src, label, type }: Props) => {
               className="object-contain"
             />
           ) : type === "user" ? (
-            <UserIcon size={25} />
+            <UserIcon className="w-full h-full p-2" />
           ) : (
-            <ArmchairIcon size={25} />
+            <ArmchairIcon className="w-full h-full p-2" />
           )}
         </button>
         {label}

@@ -43,6 +43,7 @@ const Table = ({
           label={category?.name}
           src={category?.imageURL}
           type="category"
+          className="w-16 h-16"
         />
       ),
     },

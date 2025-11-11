@@ -14,6 +14,7 @@ import { Item, ItemsPayload } from "@/models/item.model";
 import { Badge } from "../ui/badge";
 import { deleteItem } from "@/actions/items/deleteItem";
 import Avatar from "../Avatar";
+import QRCodeDialog from "./QRCodeDialog";
 
 type Props = {
   data: Paginated<Item>;
@@ -22,12 +23,14 @@ type Props = {
   setItemsPerPage: (val: number) => void;
   itemsPerPage: number;
   name: string;
+  id: string;
   fetch: (payload: ItemsPayload) => Promise<Paginated<Item>>;
 };
 
 const Table = ({
   data,
   name,
+  id,
   page = 1,
   setPage,
   itemsPerPage = 10,
@@ -38,9 +41,23 @@ const Table = ({
 
   const columns: Column[] = [
     {
+      header: () => t("QR_CODE"),
+      value: (item: Item) => (
+        <QRCodeDialog
+          item={item}
+          onAction={() => fetch({ page, itemsPerPage, _id: id })}
+        />
+      ),
+    },
+    {
       header: () => t("ID"),
       value: (item: Item) => (
-        <Avatar label={item?._id} src={item?.imageURL} type="category" />
+        <Avatar
+          label={item?._id}
+          src={item?.imageURL}
+          type="category"
+          className="md:w-16 md:h-16"
+        />
       ),
     },
     {

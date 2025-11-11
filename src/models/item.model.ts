@@ -30,8 +30,8 @@ export type CreateItemPayload = {
 
 export type EditItemPayload = {
   _id: string;
-  category: string;
-  status: ItemStatus;
-  name: string;
-  comment: string;
+  category?: string;
+  status?: ItemStatus;
+  name?: string;
+  comment?: string;
 };
