@@ -21,6 +21,7 @@ import {
   SignOutIcon,
   SquaresFourIcon,
   UsersThreeIcon,
+  PaletteIcon
 } from "@phosphor-icons/react/dist/ssr";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -46,6 +47,11 @@ const items = [
     title: ROUTES.users.displayName,
     url: ROUTES.users.url,
     icon: UsersThreeIcon,
+  },
+  {
+    title: ROUTES.colors.displayName,
+    url: ROUTES.colors.url,
+    icon: PaletteIcon,
   },
 ];
 

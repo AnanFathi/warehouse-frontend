@@ -10,4 +10,5 @@ export const ROUTES = {
   users: { url: "/users", displayName: "USERS" },
   categories: { url: "/categories", displayName: "CATEGORIES" },
   login: { url: "/login", displayName: "LOGIN" },
+  colors: { url: "/colors", displayName: "COLORS" },
 };
