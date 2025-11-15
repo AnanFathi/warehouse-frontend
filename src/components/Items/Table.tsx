@@ -85,6 +85,30 @@ const Table = ({
       value: (item: Item) => item?.name,
     },
     {
+      header: () => t("COLOR"),
+      value: (item: Item) => (
+        <div className="flex flex-row items-center gap-4">
+          <div
+            className="w-8 h-4"
+            style={{ backgroundColor: item?.color?.color }}
+          />
+          <p className="truncate">{item?.color?.name}</p>
+        </div>
+      ),
+    },
+    {
+      header: () => t("WIDTH_CM"),
+      value: (item: Item) => item?.width || 0,
+    },
+    {
+      header: () => t("LENGTH_CM"),
+      value: (item: Item) => item?.length || 0,
+    },
+    {
+      header: () => t("HEIGHT_CM"),
+      value: (item: Item) => item?.height || 0,
+    },
+    {
       header: () => t("COMMENT"),
       value: (item: Item) => item?.comment,
     },

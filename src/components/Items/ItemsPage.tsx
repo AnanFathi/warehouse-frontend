@@ -39,6 +39,7 @@ const ItemsPage = ({ colors }: { colors: Color[] }) => {
       status,
       name: debouncedName,
       category,
+      color
     });
   }, [page, itemsPerPage, debouncedId, status, debouncedName, category, color]);
 

@@ -1,4 +1,5 @@
 import { Category } from "./category.model";
+import { Color } from "./color.model";
 import { PaginatedPayload } from "./shared.model";
 
 export type ItemStatus = "IN_WAREHOUSE" | "OUT_OF_WAREHOUSE" | "UNKNOWN";
@@ -8,6 +9,10 @@ export type Item = {
   category: Category;
   status: ItemStatus;
   name: string;
+  color: Color;
+  width: number;
+  length: number;
+  height: number;
   comment: string;
   imageURL: string;
   createdAt: string;
@@ -27,6 +32,10 @@ export type CreateItemPayload = {
   status: ItemStatus;
   name: string;
   comment: string;
+  color: string;
+  width: number;
+  length: number;
+  height: number;
 };
 
 export type EditItemPayload = {
@@ -35,4 +44,8 @@ export type EditItemPayload = {
   status?: ItemStatus;
   name?: string;
   comment?: string;
+  color: string;
+  width: number;
+  length: number;
+  height: number;
 };

@@ -15,13 +15,15 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { CategoriesPayload, Category } from "@/models/category.model";
 import { Item, ItemStatus } from "@/models/item.model";
-import Dropdown from "../Dropdown";
+import Dropdown, { DropdownItem } from "../Dropdown";
 import useRequest from "@/hooks/useRequest";
 import { getCategories } from "@/actions/categories/getCategories";
 import { editItem } from "@/actions/items/editItem";
 import { createItem } from "@/actions/items/createItem";
 import { Label } from "../ui/label";
 import UploadPicture from "../UploadPicture";
+import { getColors } from "@/actions/colors/getColors";
+import { Color, ColorsPayload } from "@/models/color.model";
 
 const EditItemDialog = ({
   open,
@@ -35,6 +37,10 @@ const EditItemDialog = ({
   const [name, setName] = useState(item?.name || "");
   const [status, setStatus] = useState<ItemStatus>(item?.status || "UNKNOWN");
   const [category, setCategory] = useState<string>(item?.category?._id || "");
+  const [color, setColor] = useState<string>(item?.color?._id || "");
+  const [width, setWidth] = useState<number>(item?.width || 0);
+  const [length, setLength] = useState<number>(item?.length || 0);
+  const [height, setHeight] = useState<number>(item?.height || 0);
   const [comment, setComment] = useState<string>(item?.comment || "");
   const [isLoading, setIsLoading] = useState(false);
   const [picture, setPicture] = useState<File>();
@@ -42,9 +48,15 @@ const EditItemDialog = ({
   const [categories, setCategories] = useState<
     { value: string; label: string }[]
   >([]);
+  const [colors, setColors] = useState<DropdownItem[]>([]);
 
   const { request: fetchCategories, isLoading: isLoadingCategories } =
     useRequest<CategoriesPayload, Paginated<Category>>(getCategories);
+
+  const { request: fetchColors, isLoading: isLoadingColors } = useRequest<
+    ColorsPayload,
+    Color[]
+  >(getColors);
 
   const handleFetchCategories = async () => {
     const newData = await fetchCategories({
@@ -59,6 +71,25 @@ const EditItemDialog = ({
       }));
       setCategories((prev) => [...prev, ...mapped]);
       setCategoriesPage((prev) => prev + 1);
+      return mapped;
+    }
+    return [];
+  };
+
+  const handleFetchColors = async () => {
+    const newData = await fetchColors({});
+
+    if (newData?.length) {
+      const mapped = newData.map((c) => ({
+        value: c._id,
+        labelNode: (
+          <div className="flex flex-row items-center gap-4">
+            <div className="w-8 h-4" style={{ backgroundColor: c?.color }} />
+            <p className="truncate">{c?.name}</p>
+          </div>
+        ),
+      }));
+      setColors(mapped as DropdownItem[]);
       return mapped;
     }
     return [];
@@ -80,7 +111,7 @@ const EditItemDialog = ({
   ];
 
   useEffect(() => {
-    const init = async () => {
+    const initCategories = async () => {
       setCategories([]);
       setCategoriesPage(1);
       const newCategories = await handleFetchCategories();
@@ -92,7 +123,19 @@ const EditItemDialog = ({
         else setCategory(item.category._id); // fallback if not in first page
       }
     };
-    init();
+
+    const initColors = async () => {
+      setColors([]);
+      const newColors = await handleFetchColors();
+
+      if (item?.color?._id) {
+        const found = newColors?.find((c) => c.value === item.color._id);
+        if (found) setColor(found.value);
+        else setColor(item.color._id); // fallback if not in first page
+      }
+    };
+    initCategories();
+    initColors();
   }, [item]);
 
   const handleSubmit = async () => {
@@ -105,6 +148,10 @@ const EditItemDialog = ({
         category,
         comment,
         status,
+        color,
+        width,
+        length,
+        height,
       });
     } else {
       await createItem({
@@ -112,6 +159,10 @@ const EditItemDialog = ({
         category,
         comment,
         status,
+        color,
+        width,
+        length,
+        height,
       });
     }
 
@@ -175,6 +226,45 @@ const EditItemDialog = ({
               disabled={!categories || categories?.length === 0}
               loadingData={isLoadingCategories}
               onReachTheEnd={handleFetchCategories}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>{t("COLOR")}</Label>
+            <Dropdown
+              items={colors}
+              selected={color}
+              setSelected={(val: any) => setColor(val)}
+              placeholder="SELECT_COLOR"
+              showNoneOption
+              disabled={!colors || colors?.length === 0}
+              loadingData={isLoadingColors}
+            />
+          </div>
+
+          <div className="flex flex-row gap-2">
+            <TextInput
+              label={t("WIDTH")}
+              placeholder={t("ENTER_WIDTH")}
+              value={width as any}
+              setValue={setWidth as any}
+              type="number"
+            />
+
+            <TextInput
+              label={t("LENGTH")}
+              placeholder={t("ENTER_LENGTH")}
+              value={length as any}
+              setValue={setLength as any}
+              type="number"
+            />
+
+            <TextInput
+              label={t("HEIGHT")}
+              placeholder={t("ENTER_HEIGHT")}
+              value={height as any}
+              setValue={setHeight as any}
+              type="number"
             />
           </div>
         </div>
