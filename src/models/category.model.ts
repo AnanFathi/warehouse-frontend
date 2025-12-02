@@ -4,6 +4,7 @@ export type Category = {
   _id: string;
   name: string;
   imageURL: string;
+  itemCount: number;
   createdAt: string;
   updatedAt: string;
 };

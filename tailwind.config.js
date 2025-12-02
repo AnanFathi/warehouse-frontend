@@ -7,6 +7,10 @@ module.exports = {
   			quicksand: [
   				'var(--font-quicksand)',
   				'sans-serif'
+  			],
+  			googlesans: [
+  				'var(--font-googlesans)',
+  				'sans-serif'
   			]
   		},
   		borderRadius: {

@@ -8,13 +8,13 @@ export default async function Login() {
 
   return (
     <div className="relative flex w-full h-screen justify-center items-center">
-      <div className="w-full max-w-[650px] flex flex-col px-6 -translate-y-10 transition-all">
-        <div className="w-full flex justify-center -my-5">
+      <div className="w-full max-w-[650px] flex flex-col gap-20 px-6 transition-all">
+        <div className="w-full flex justify-center">
           <Image
-            src="/images/logo-06.png"
+            src="/images/login-logo.png"
             alt="Logo"
-            width={1400}
-            height={1400}
+            width={400}
+            height={400}
             className="object-contain"
           />
         </div>

@@ -63,6 +63,14 @@ const Table = ({
       ),
     },
     {
+      header: () => t("COUNT"),
+      value: (category: Category) => (
+        <p dir="ltr" className="rtl:text-end">
+          {category?.itemCount || 0}
+        </p>
+      ),
+    },
+    {
       header: () => t("CREATED_AT"),
       value: (category: Category) => (
         <p dir="ltr" className="rtl:text-end">
