@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-import { i18nConfig } from "./i18n";
-
+import type { NextConfig } from 'next';
+import { i18nConfig } from './i18n';
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   i18n: {
@@ -11,12 +10,16 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "**.supabase.co", // ✅ any Supabase project
-        pathname: "/storage/v1/object/public/**", // ✅ any public file
+        protocol: 'https',
+        hostname: '**.supabase.co', // :white_check_mark: any Supabase project
+        pathname: '/storage/v1/object/public/**', // :white_check_mark: any public file
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
 };
-
 export default nextConfig;
